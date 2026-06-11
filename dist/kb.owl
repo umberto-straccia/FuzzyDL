@@ -1,0 +1,1900 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="./matchmaking.owl#"
+     xml:base="./matchmaking.owl"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:myOntologies="http://www.semanticweb.org/ontologies/myOntologies.owl#">
+    <owl:Ontology rdf:about="./matchmaking.owl">
+        <myOntologies:fuzzyLabel>&lt;fuzzyOwl2 fuzzyType=&quot;ontology&quot;&gt;
+&lt;FuzzyLogic logic=&quot;zadeh&quot; /&gt;
+&lt;/fuzzyOwl2&gt;</myOntologies:fuzzyLabel>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotation properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#fuzzyLabel -->
+
+    <owl:AnnotationProperty rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#fuzzyLabel"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Datatypes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#SellerKmWarr -->
+
+    <rdfs:Datatype rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#SellerKmWarr">
+        <owl:equivalentClass>
+            <rdfs:Datatype>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdfs:Datatype>
+                        <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                        <owl:withRestrictions rdf:parseType="Collection">
+                            <rdf:Description>
+                                <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#double">0.0</xsd:minInclusive>
+                            </rdf:Description>
+                        </owl:withRestrictions>
+                    </rdfs:Datatype>
+                    <rdfs:Datatype>
+                        <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                        <owl:withRestrictions rdf:parseType="Collection">
+                            <rdf:Description>
+                                <xsd:maxInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#double">300000.0</xsd:maxInclusive>
+                            </rdf:Description>
+                        </owl:withRestrictions>
+                    </rdfs:Datatype>
+                </owl:intersectionOf>
+            </rdfs:Datatype>
+        </owl:equivalentClass>
+        <myOntologies:fuzzyLabel>&lt;fuzzyOwl2 fuzzyType=&quot;datatype&quot;&gt;
+&lt;Datatype type=&quot;leftshoulder&quot; a=&quot;100000.0&quot; b=&quot;125000.0&quot; /&gt;
+&lt;/fuzzyOwl2&gt;</myOntologies:fuzzyLabel>
+    </rdfs:Datatype>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#SellerMWarr -->
+
+    <rdfs:Datatype rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#SellerMWarr">
+        <owl:equivalentClass>
+            <rdfs:Datatype>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdfs:Datatype>
+                        <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                        <owl:withRestrictions rdf:parseType="Collection">
+                            <rdf:Description>
+                                <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#double">0.0</xsd:minInclusive>
+                            </rdf:Description>
+                        </owl:withRestrictions>
+                    </rdfs:Datatype>
+                    <rdfs:Datatype>
+                        <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                        <owl:withRestrictions rdf:parseType="Collection">
+                            <rdf:Description>
+                                <xsd:maxInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#double">96.0</xsd:maxInclusive>
+                            </rdf:Description>
+                        </owl:withRestrictions>
+                    </rdfs:Datatype>
+                </owl:intersectionOf>
+            </rdfs:Datatype>
+        </owl:equivalentClass>
+        <myOntologies:fuzzyLabel>&lt;fuzzyOwl2 fuzzyType=&quot;datatype&quot;&gt;
+&lt;Datatype type=&quot;leftshoulder&quot; a=&quot;60.0&quot; b=&quot;72.0&quot; /&gt;
+&lt;/fuzzyOwl2&gt;</myOntologies:fuzzyLabel>
+    </rdfs:Datatype>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#geq22000 -->
+
+    <rdfs:Datatype rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#geq22000">
+        <owl:equivalentClass>
+            <rdfs:Datatype>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdfs:Datatype>
+                        <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                        <owl:withRestrictions rdf:parseType="Collection">
+                            <rdf:Description>
+                                <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#double">22000.0</xsd:minInclusive>
+                            </rdf:Description>
+                        </owl:withRestrictions>
+                    </rdfs:Datatype>
+                    <rdfs:Datatype>
+                        <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                        <owl:withRestrictions rdf:parseType="Collection">
+                            <rdf:Description>
+                                <xsd:maxInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#double">100000.0</xsd:maxInclusive>
+                            </rdf:Description>
+                        </owl:withRestrictions>
+                    </rdfs:Datatype>
+                </owl:intersectionOf>
+            </rdfs:Datatype>
+        </owl:equivalentClass>
+        <myOntologies:fuzzyLabel>&lt;fuzzyOwl2 fuzzyType=&quot;datatype&quot;&gt;
+&lt;Datatype type=&quot;rightshoulder&quot; a=&quot;22000.0&quot; b=&quot;22000.0&quot; /&gt;
+&lt;/fuzzyOwl2&gt;</myOntologies:fuzzyLabel>
+    </rdfs:Datatype>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#leq26000 -->
+
+    <rdfs:Datatype rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#leq26000">
+        <owl:equivalentClass>
+            <rdfs:Datatype>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdfs:Datatype>
+                        <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                        <owl:withRestrictions rdf:parseType="Collection">
+                            <rdf:Description>
+                                <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#double">0.0</xsd:minInclusive>
+                            </rdf:Description>
+                        </owl:withRestrictions>
+                    </rdfs:Datatype>
+                    <rdfs:Datatype>
+                        <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                        <owl:withRestrictions rdf:parseType="Collection">
+                            <rdf:Description>
+                                <xsd:maxInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#double">26000.0</xsd:maxInclusive>
+                            </rdf:Description>
+                        </owl:withRestrictions>
+                    </rdfs:Datatype>
+                </owl:intersectionOf>
+            </rdfs:Datatype>
+        </owl:equivalentClass>
+        <myOntologies:fuzzyLabel>&lt;fuzzyOwl2 fuzzyType=&quot;datatype&quot;&gt;
+&lt;Datatype type=&quot;leftshoulder&quot; a=&quot;26000.0&quot; b=&quot;26000.0&quot; /&gt;
+&lt;/fuzzyOwl2&gt;</myOntologies:fuzzyLabel>
+    </rdfs:Datatype>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#ls22000_24000 -->
+
+    <rdfs:Datatype rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#ls22000_24000">
+        <owl:equivalentClass>
+            <rdfs:Datatype>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdfs:Datatype>
+                        <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                        <owl:withRestrictions rdf:parseType="Collection">
+                            <rdf:Description>
+                                <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#double">0.0</xsd:minInclusive>
+                            </rdf:Description>
+                        </owl:withRestrictions>
+                    </rdfs:Datatype>
+                    <rdfs:Datatype>
+                        <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                        <owl:withRestrictions rdf:parseType="Collection">
+                            <rdf:Description>
+                                <xsd:maxInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#double">100000.0</xsd:maxInclusive>
+                            </rdf:Description>
+                        </owl:withRestrictions>
+                    </rdfs:Datatype>
+                </owl:intersectionOf>
+            </rdfs:Datatype>
+        </owl:equivalentClass>
+        <myOntologies:fuzzyLabel>&lt;fuzzyOwl2 fuzzyType=&quot;datatype&quot;&gt;
+&lt;Datatype type=&quot;leftshoulder&quot; a=&quot;22000.0&quot; b=&quot;24000.0&quot; /&gt;
+&lt;/fuzzyOwl2&gt;</myOntologies:fuzzyLabel>
+    </rdfs:Datatype>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#ls22300_22750 -->
+
+    <rdfs:Datatype rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#ls22300_22750">
+        <owl:equivalentClass>
+            <rdfs:Datatype>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdfs:Datatype>
+                        <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                        <owl:withRestrictions rdf:parseType="Collection">
+                            <rdf:Description>
+                                <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#double">0.0</xsd:minInclusive>
+                            </rdf:Description>
+                        </owl:withRestrictions>
+                    </rdfs:Datatype>
+                    <rdfs:Datatype>
+                        <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                        <owl:withRestrictions rdf:parseType="Collection">
+                            <rdf:Description>
+                                <xsd:maxInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#double">100000.0</xsd:maxInclusive>
+                            </rdf:Description>
+                        </owl:withRestrictions>
+                    </rdfs:Datatype>
+                </owl:intersectionOf>
+            </rdfs:Datatype>
+        </owl:equivalentClass>
+        <myOntologies:fuzzyLabel>&lt;fuzzyOwl2 fuzzyType=&quot;datatype&quot;&gt;
+&lt;Datatype type=&quot;leftshoulder&quot; a=&quot;22300.0&quot; b=&quot;22750.0&quot; /&gt;
+&lt;/fuzzyOwl2&gt;</myOntologies:fuzzyLabel>
+    </rdfs:Datatype>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#qOWA -->
+
+    <rdfs:Datatype rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#qOWA">
+        <owl:equivalentClass>
+            <rdfs:Datatype>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdfs:Datatype>
+                        <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                        <owl:withRestrictions rdf:parseType="Collection">
+                            <rdf:Description>
+                                <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#double">0.0</xsd:minInclusive>
+                            </rdf:Description>
+                        </owl:withRestrictions>
+                    </rdfs:Datatype>
+                    <rdfs:Datatype>
+                        <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                        <owl:withRestrictions rdf:parseType="Collection">
+                            <rdf:Description>
+                                <xsd:maxInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#double">1.0</xsd:maxInclusive>
+                            </rdf:Description>
+                        </owl:withRestrictions>
+                    </rdfs:Datatype>
+                </owl:intersectionOf>
+            </rdfs:Datatype>
+        </owl:equivalentClass>
+        <myOntologies:fuzzyLabel>&lt;fuzzyOwl2 fuzzyType=&quot;datatype&quot;&gt;
+&lt;Datatype type=&quot;rightshoulder&quot; a=&quot;0.4&quot; b=&quot;0.8&quot; /&gt;
+&lt;/fuzzyOwl2&gt;</myOntologies:fuzzyLabel>
+    </rdfs:Datatype>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#rs15000_175000 -->
+
+    <rdfs:Datatype rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#rs15000_175000">
+        <owl:equivalentClass>
+            <rdfs:Datatype>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdfs:Datatype>
+                        <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                        <owl:withRestrictions rdf:parseType="Collection">
+                            <rdf:Description>
+                                <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#double">0.0</xsd:minInclusive>
+                            </rdf:Description>
+                        </owl:withRestrictions>
+                    </rdfs:Datatype>
+                    <rdfs:Datatype>
+                        <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                        <owl:withRestrictions rdf:parseType="Collection">
+                            <rdf:Description>
+                                <xsd:maxInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#double">300000.0</xsd:maxInclusive>
+                            </rdf:Description>
+                        </owl:withRestrictions>
+                    </rdfs:Datatype>
+                </owl:intersectionOf>
+            </rdfs:Datatype>
+        </owl:equivalentClass>
+        <myOntologies:fuzzyLabel>&lt;fuzzyOwl2 fuzzyType=&quot;datatype&quot;&gt;
+&lt;Datatype type=&quot;rightshoulder&quot; a=&quot;15000.0&quot; b=&quot;175000.0&quot; /&gt;
+&lt;/fuzzyOwl2&gt;</myOntologies:fuzzyLabel>
+    </rdfs:Datatype>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#rs225000_22750 -->
+
+    <rdfs:Datatype rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#rs225000_22750">
+        <owl:equivalentClass>
+            <rdfs:Datatype>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdfs:Datatype>
+                        <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                        <owl:withRestrictions rdf:parseType="Collection">
+                            <rdf:Description>
+                                <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#double">0.0</xsd:minInclusive>
+                            </rdf:Description>
+                        </owl:withRestrictions>
+                    </rdfs:Datatype>
+                    <rdfs:Datatype>
+                        <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                        <owl:withRestrictions rdf:parseType="Collection">
+                            <rdf:Description>
+                                <xsd:maxInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#double">100000.0</xsd:maxInclusive>
+                            </rdf:Description>
+                        </owl:withRestrictions>
+                    </rdfs:Datatype>
+                </owl:intersectionOf>
+            </rdfs:Datatype>
+        </owl:equivalentClass>
+        <myOntologies:fuzzyLabel>&lt;fuzzyOwl2 fuzzyType=&quot;datatype&quot;&gt;
+&lt;Datatype type=&quot;rightshoulder&quot; a=&quot;22500.0&quot; b=&quot;22750.0&quot; /&gt;
+&lt;/fuzzyOwl2&gt;</myOntologies:fuzzyLabel>
+    </rdfs:Datatype>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#hasAirConditioning -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#hasAirConditioning">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#hasAlarmSystem -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#hasAlarmSystem">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#hasBrakes -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#hasBrakes">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#PerformanceandHandlingDetail"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#hasCargoCapacity -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#hasCargoCapacity">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#Car"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#hasCargoCapacityDetails -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#hasCargoCapacityDetails">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#Car"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#CargoCapacityDetail"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#hasComfortandConvenience -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#hasComfortandConvenience">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#Car"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#hasComfortandConvenienceDetails -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#hasComfortandConvenienceDetails">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#Car"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#ComfortandConvenienceDetail"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#hasCurbWeight -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#hasCurbWeight">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#PerformanceandHandlingDetail"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#hasDifferential -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#hasDifferential">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#PerformanceandHandlingDetail"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#hasDragCoefficient -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#hasDragCoefficient">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#PerformanceandHandlingDetail"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#hasEngine -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#hasEngine">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#PerformanceandHandlingDetail"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#hasExColor -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#hasExColor">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#hasExpertReviews -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#hasExpertReviews">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#Car"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#hasFrontAnti-RollBar -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#hasFrontAnti-RollBar">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#PerformanceandHandlingDetail"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#hasFrontShocks -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#hasFrontShocks">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#PerformanceandHandlingDetail"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#hasFrontSprings -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#hasFrontSprings">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#PerformanceandHandlingDetail"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#hasFrontSuspension -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#hasFrontSuspension">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#PerformanceandHandlingDetail"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#hasInsurance -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#hasInsurance"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#hasInvoice -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#hasInvoice">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#Car"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#hasKMWarranty -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#hasKMWarranty">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#hasLimitedSlip -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#hasLimitedSlip">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#PerformanceandHandlingDetail"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#hasMPG -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#hasMPG">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#Car"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#hasMSRP -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#hasMSRP">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#Car"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#hasMWarranty -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#hasMWarranty">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#hasMake -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#hasMake">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#Car"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#CarMaker"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#hasModel -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#hasModel">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#Car"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#hasNavigator -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#hasNavigator">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#hasPassengerSpace -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#hasPassengerSpace">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#Car"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#hasPassengerSpaceDetails -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#hasPassengerSpaceDetails">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#Car"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#PassengerSpaceDetail"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#hasPerformanceandHandling -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#hasPerformanceandHandling">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#Car"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#hasPerformanceandHandlingDetails -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#hasPerformanceandHandlingDetails">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#Car"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#PerformanceandHandlingDetail"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#hasPrice -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#hasPrice">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#hasRearAnti-RollBar -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#hasRearAnti-RollBar">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#PerformanceandHandlingDetail"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#hasRearShocks -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#hasRearShocks">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#PerformanceandHandlingDetail"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#hasRearSprings -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#hasRearSprings">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#PerformanceandHandlingDetail"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#hasRearSuspension -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#hasRearSuspension">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#PerformanceandHandlingDetail"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#hasResaleValue -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#hasResaleValue">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#Car"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#hasRide -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#hasRide">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#PerformanceandHandlingDetail"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#hasSafetyFeatures -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#hasSafetyFeatures">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#Car"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#hasSafetyFeaturesDetails -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#hasSafetyFeaturesDetails">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#Car"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#SafetyFeaturesDetail"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#hasSizzleOrFizzle -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#hasSizzleOrFizzle">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#Car"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#hasTransmission -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#hasTransmission">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#PerformanceandHandlingDetail"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#hasWheels -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#hasWheels">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#PerformanceandHandlingDetail"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#hasYear -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#hasYear">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#Car"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#Acura -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#Acura">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#CarMaker"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#AirConditioning -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#AirConditioning"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#AlarmSystem -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#AlarmSystem"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#AstonMartin -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#AstonMartin">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#CarMaker"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#B1 -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#B1">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#hasPrice"/>
+                        <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#ls22300_22750"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#hasAlarmSystem"/>
+                        <owl:allValuesFrom>
+                            <owl:Class>
+                                <owl:complementOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#AlarmSystem"/>
+                            </owl:Class>
+                        </owl:allValuesFrom>
+                    </owl:Restriction>
+                </owl:unionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#B2 -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#B2">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#hasInsurance"/>
+                        <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#DriverInsurance"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#hasInsurance"/>
+                        <owl:someValuesFrom>
+                            <owl:Class>
+                                <owl:unionOf rdf:parseType="Collection">
+                                    <rdf:Description rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#FireInsurance"/>
+                                    <rdf:Description rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#TheftInsurance"/>
+                                </owl:unionOf>
+                            </owl:Class>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#B3 -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#B3">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#hasAirConditioning"/>
+                        <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#AirConditioning"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#hasExColor"/>
+                        <owl:someValuesFrom>
+                            <owl:Class>
+                                <owl:unionOf rdf:parseType="Collection">
+                                    <rdf:Description rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#ExColorBlack"/>
+                                    <rdf:Description rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#ExColorGray"/>
+                                </owl:unionOf>
+                            </owl:Class>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#B4 -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#B4">
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#hasPrice"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#ls22000_24000"/>
+            </owl:Restriction>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#B5 -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#B5">
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#hasKMWarranty"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#rs15000_175000"/>
+            </owl:Restriction>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#BMW -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#BMW">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#CarMaker"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#Bentley -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#Bentley">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#CarMaker"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#Beta -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#Beta">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#PassengerCar"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#hasPrice"/>
+                        <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#leq26000"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#Bugatti -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#Bugatti">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#CarMaker"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#Buick -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#Buick">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#CarMaker"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#Buy -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#Buy">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#Beta"/>
+                    <rdf:Description rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#BuyerPreferences"/>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#BuyerPreferences -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#BuyerPreferences">
+        <owl:equivalentClass rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#class__1"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#BuyerPrefsOWA -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#BuyerPrefsOWA">
+        <owl:equivalentClass rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#class__2"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#BuyerPrefsQOWA -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#BuyerPrefsQOWA">
+        <owl:equivalentClass rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#class__4"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#Cadillac -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#Cadillac">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#CarMaker"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#CaompactSUV -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#CaompactSUV">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#SUV"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#Car -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#Car">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#Vehicle"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#CarDetail -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#CarDetail"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#CarMaker -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#CarMaker"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#CargoCapacityDetail -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#CargoCapacityDetail">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#CarDetail"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#Chevrolet -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#Chevrolet">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#CarMaker"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#Chrysler -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#Chrysler">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#CarMaker"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#Color -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#Color"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#ComfortandConvenienceDetail -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#ComfortandConvenienceDetail">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#CarDetail"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#CompactCar -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#CompactCar">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#PassengerCar"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#CompactTruck -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#CompactTruck">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#Truck"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#Dodge -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#Dodge">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#CarMaker"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#DriverInsurance -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#DriverInsurance">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#Insurance"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#ExColorBlack -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#ExColorBlack">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#Color"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#ExColorGray -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#ExColorGray">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#Color"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#Ferrari -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#Ferrari">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#CarMaker"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#FireInsurance -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#FireInsurance">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#Insurance"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#Ford -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#Ford">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#CarMaker"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#FullSizeSUV -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#FullSizeSUV">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#SUV"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#FullSizeTruck -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#FullSizeTruck">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#Truck"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#FullSizeVan -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#FullSizeVan">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#Van"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#GMC -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#GMC">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#CarMaker"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#GPS_system -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#GPS_system"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#Honda -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#Honda">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#CarMaker"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#Hummer -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#Hummer">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#CarMaker"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#Hyndai -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#Hyndai">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#CarMaker"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#Infiniti -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#Infiniti">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#CarMaker"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#Insurance -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#Insurance"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#InsurancePlus -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#InsurancePlus">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#DriverInsurance"/>
+                    <rdf:Description rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#TheftInsurance"/>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#Isuzu -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#Isuzu">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#CarMaker"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#Jaguar -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#Jaguar">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#CarMaker"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#Jeep -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#Jeep">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#CarMaker"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#Kia -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#Kia">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#CarMaker"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#Lamborghini -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#Lamborghini">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#CarMaker"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#LandRover -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#LandRover">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#CarMaker"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#Lexus -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#Lexus">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#CarMaker"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#Lincoln -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#Lincoln">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#CarMaker"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#Lotus -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#Lotus">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#CarMaker"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#LuxuryCar -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#LuxuryCar">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#Car"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#LuxurySUV -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#LuxurySUV">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#SUV"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#MINI -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#MINI">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#CarMaker"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#Maserati -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#Maserati">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#CarMaker"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#Maybach -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#Maybach">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#CarMaker"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#Mazda -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#Mazda">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#CarMaker"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#Mercedes-Benz -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#Mercedes-Benz">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#CarMaker"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#Mercury -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#Mercury">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#CarMaker"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#MidLuxuryCar -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#MidLuxuryCar">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#LuxuryCar"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#MidSizeCar -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#MidSizeCar">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#PassengerCar"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#MidSizeSUV -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#MidSizeSUV">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#SUV"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#Minivan -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#Minivan">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#Van"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#Mitsubishi -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#Mitsubishi">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#CarMaker"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#Morgan -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#Morgan">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#CarMaker"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#NavigatorPack -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#NavigatorPack">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#GPS_system"/>
+                    <rdf:Description rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#SatelliteAlarm"/>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#NearLuxuryCar -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#NearLuxuryCar">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#LuxuryCar"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#Nissan -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#Nissan">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#CarMaker"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#Objective -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#Objective">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#Buy"/>
+                    <rdf:Description rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#Sell"/>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#Panoz -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#Panoz">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#CarMaker"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#PassengerCar -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#PassengerCar">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#Car"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#PassengerSpaceDetail -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#PassengerSpaceDetail">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#CarDetail"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#PerformanceandHandlingDetail -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#PerformanceandHandlingDetail">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#CarDetail"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#Pontiac -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#Pontiac">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#CarMaker"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#Porsche -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#Porsche">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#CarMaker"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#Rolls-Royce -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#Rolls-Royce">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#CarMaker"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#S1 -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#S1">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#hasPrice"/>
+                        <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#rs225000_22750"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#hasNavigator"/>
+                        <owl:allValuesFrom>
+                            <owl:Class>
+                                <owl:complementOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#NavigatorPack"/>
+                            </owl:Class>
+                        </owl:allValuesFrom>
+                    </owl:Restriction>
+                </owl:unionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#S2 -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#S2">
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#hasInsurance"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#InsurancePlus"/>
+            </owl:Restriction>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#S3 -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#S3">
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#hasKMWarranty"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#SellerKmWarr"/>
+            </owl:Restriction>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#S4 -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#S4">
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#hasMWarranty"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#SellerMWarr"/>
+            </owl:Restriction>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#S5 -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#S5">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#hasAirConditioning"/>
+                        <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#AirConditioning"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#hasExColor"/>
+                        <owl:allValuesFrom>
+                            <owl:Class>
+                                <owl:complementOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#ExColorBlack"/>
+                            </owl:Class>
+                        </owl:allValuesFrom>
+                    </owl:Restriction>
+                </owl:unionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#SUV -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#SUV">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#Vehicle"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#Saab -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#Saab">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#CarMaker"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#SafetyFeaturesDetail -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#SafetyFeaturesDetail">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#CarDetail"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#SatelliteAlarm -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#SatelliteAlarm">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#AlarmSystem"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#Saturn -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#Saturn">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#CarMaker"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#Scion -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#Scion">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#CarMaker"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#SedanCar -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#SedanCar">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#PassengerCar"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#Sell -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#Sell">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#SellerPreferences"/>
+                    <rdf:Description rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#Sigma"/>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#SellerKmWarr -->
+
+    <rdf:Description rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#SellerKmWarr">
+        <myOntologies:fuzzyLabel>&lt;fuzzyOwl2 fuzzyType=&quot;datatype&quot;&gt;
+&lt;Datatype type=&quot;leftshoulder&quot; a=&quot;100000.0&quot; b=&quot;125000.0&quot; /&gt;
+&lt;/fuzzyOwl2&gt;</myOntologies:fuzzyLabel>
+    </rdf:Description>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#SellerMWarr -->
+
+    <rdf:Description rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#SellerMWarr">
+        <myOntologies:fuzzyLabel>&lt;fuzzyOwl2 fuzzyType=&quot;datatype&quot;&gt;
+&lt;Datatype type=&quot;leftshoulder&quot; a=&quot;60.0&quot; b=&quot;72.0&quot; /&gt;
+&lt;/fuzzyOwl2&gt;</myOntologies:fuzzyLabel>
+    </rdf:Description>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#SellerPreferences -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#SellerPreferences">
+        <owl:equivalentClass rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#class__3"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#Sigma -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#Sigma">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#SedanCar"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#hasPrice"/>
+                        <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#geq22000"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#SportCar -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#SportCar">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#PassengerCar"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#Spyker -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#Spyker">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#CarMaker"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#Subaru -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#Subaru">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#CarMaker"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#Suzuki -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#Suzuki">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#CarMaker"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#TheftInsurance -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#TheftInsurance">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#Insurance"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#Toyota -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#Toyota">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#CarMaker"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#Truck -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#Truck">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#Vehicle"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#UltraLuxuryCar -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#UltraLuxuryCar">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#LuxuryCar"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#Van -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#Van">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#Vehicle"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#Vehicle -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#Vehicle"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#Volkswagen -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#Volkswagen">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#CarMaker"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#Volvo -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#Volvo">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/myOntologies.owl#CarMaker"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#class__1 -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#class__1">
+        <myOntologies:fuzzyLabel>&lt;fuzzyOwl2 fuzzyType=&quot;concept&quot;&gt;
+&lt;Concept type=&quot;weightedSum&quot; value=&quot;&quot;&gt;
+ &lt;Concept type=&quot;weighted&quot; value=&quot;0.1&quot; base=&quot;&lt;http://www.semanticweb.org/ontologies/myOntologies.owl#B1&gt;&quot; /&gt;
+&lt;Concept type=&quot;weighted&quot; value=&quot;0.2&quot; base=&quot;&lt;http://www.semanticweb.org/ontologies/myOntologies.owl#B2&gt;&quot; /&gt;
+&lt;Concept type=&quot;weighted&quot; value=&quot;0.1&quot; base=&quot;&lt;http://www.semanticweb.org/ontologies/myOntologies.owl#B3&gt;&quot; /&gt;
+&lt;Concept type=&quot;weighted&quot; value=&quot;0.2&quot; base=&quot;&lt;http://www.semanticweb.org/ontologies/myOntologies.owl#B4&gt;&quot; /&gt;
+&lt;Concept type=&quot;weighted&quot; value=&quot;0.4&quot; base=&quot;&lt;http://www.semanticweb.org/ontologies/myOntologies.owl#B5&gt;&quot; /&gt;
+&lt;/Concept&gt;
+&lt;/fuzzyOwl2&gt;</myOntologies:fuzzyLabel>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#class__2 -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#class__2"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#class__3 -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#class__3">
+        <myOntologies:fuzzyLabel>&lt;fuzzyOwl2 fuzzyType=&quot;concept&quot;&gt;
+&lt;Concept type=&quot;weightedSum&quot; value=&quot;&quot;&gt;
+ &lt;Concept type=&quot;weighted&quot; value=&quot;0.3&quot; base=&quot;&lt;http://www.semanticweb.org/ontologies/myOntologies.owl#S1&gt;&quot; /&gt;
+&lt;Concept type=&quot;weighted&quot; value=&quot;0.1&quot; base=&quot;&lt;http://www.semanticweb.org/ontologies/myOntologies.owl#S2&gt;&quot; /&gt;
+&lt;Concept type=&quot;weighted&quot; value=&quot;0.3&quot; base=&quot;&lt;http://www.semanticweb.org/ontologies/myOntologies.owl#S3&gt;&quot; /&gt;
+&lt;Concept type=&quot;weighted&quot; value=&quot;0.1&quot; base=&quot;&lt;http://www.semanticweb.org/ontologies/myOntologies.owl#S4&gt;&quot; /&gt;
+&lt;Concept type=&quot;weighted&quot; value=&quot;0.2&quot; base=&quot;&lt;http://www.semanticweb.org/ontologies/myOntologies.owl#S5&gt;&quot; /&gt;
+&lt;/Concept&gt;
+&lt;/fuzzyOwl2&gt;</myOntologies:fuzzyLabel>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#class__4 -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#class__4"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#geq22000 -->
+
+    <rdf:Description rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#geq22000">
+        <myOntologies:fuzzyLabel>&lt;fuzzyOwl2 fuzzyType=&quot;datatype&quot;&gt;
+&lt;Datatype type=&quot;rightshoulder&quot; a=&quot;22000.0&quot; b=&quot;22000.0&quot; /&gt;
+&lt;/fuzzyOwl2&gt;</myOntologies:fuzzyLabel>
+    </rdf:Description>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#leq26000 -->
+
+    <rdf:Description rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#leq26000">
+        <myOntologies:fuzzyLabel>&lt;fuzzyOwl2 fuzzyType=&quot;datatype&quot;&gt;
+&lt;Datatype type=&quot;leftshoulder&quot; a=&quot;26000.0&quot; b=&quot;26000.0&quot; /&gt;
+&lt;/fuzzyOwl2&gt;</myOntologies:fuzzyLabel>
+    </rdf:Description>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#ls22000_24000 -->
+
+    <rdf:Description rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#ls22000_24000">
+        <myOntologies:fuzzyLabel>&lt;fuzzyOwl2 fuzzyType=&quot;datatype&quot;&gt;
+&lt;Datatype type=&quot;leftshoulder&quot; a=&quot;22000.0&quot; b=&quot;24000.0&quot; /&gt;
+&lt;/fuzzyOwl2&gt;</myOntologies:fuzzyLabel>
+    </rdf:Description>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#ls22300_22750 -->
+
+    <rdf:Description rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#ls22300_22750">
+        <myOntologies:fuzzyLabel>&lt;fuzzyOwl2 fuzzyType=&quot;datatype&quot;&gt;
+&lt;Datatype type=&quot;leftshoulder&quot; a=&quot;22300.0&quot; b=&quot;22750.0&quot; /&gt;
+&lt;/fuzzyOwl2&gt;</myOntologies:fuzzyLabel>
+    </rdf:Description>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#rs15000_175000 -->
+
+    <rdf:Description rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#rs15000_175000">
+        <myOntologies:fuzzyLabel>&lt;fuzzyOwl2 fuzzyType=&quot;datatype&quot;&gt;
+&lt;Datatype type=&quot;rightshoulder&quot; a=&quot;15000.0&quot; b=&quot;175000.0&quot; /&gt;
+&lt;/fuzzyOwl2&gt;</myOntologies:fuzzyLabel>
+    </rdf:Description>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/myOntologies.owl#rs225000_22750 -->
+
+    <rdf:Description rdf:about="http://www.semanticweb.org/ontologies/myOntologies.owl#rs225000_22750">
+        <myOntologies:fuzzyLabel>&lt;fuzzyOwl2 fuzzyType=&quot;datatype&quot;&gt;
+&lt;Datatype type=&quot;rightshoulder&quot; a=&quot;22500.0&quot; b=&quot;22750.0&quot; /&gt;
+&lt;/fuzzyOwl2&gt;</myOntologies:fuzzyLabel>
+    </rdf:Description>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 3.4.5-SNAPSHOT) http://owlapi.sourceforge.net -->
+

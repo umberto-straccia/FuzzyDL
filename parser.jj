@@ -1,0 +1,2314 @@
+options
+{
+	STATIC = false;
+}
+PARSER_BEGIN(Parser)
+
+package fuzzydl.parser;
+
+import java.io.*;
+import java.util.*;
+
+import fuzzydl.*;
+import fuzzydl.exception.*;
+import fuzzydl.milp.*;
+import fuzzydl.util.*;
+
+
+/**
+ * Parses an input file containing a fuzzy ontology.
+ * @author Fernando Bobillo
+ */
+public class Parser
+{
+
+    private static final String CONFIG_FILE = "CONFIG";
+    private static ArrayList<Concept> temporaryConceptsList = new ArrayList<Concept>();
+    private static ArrayList<String> temporaryConceptNamesList = new ArrayList<String>();
+    private static Hashtable<String, Double> truthConstants = new Hashtable<String, Double>();
+
+    private static KnowledgeBase kb = new KnowledgeBase();
+    private static ArrayList<Query> queries = new ArrayList<Query>();
+
+
+    /**
+	 * Reset the parser.
+	 */
+    public static void reset()
+    {
+        temporaryConceptsList = new ArrayList<Concept>();
+        temporaryConceptNamesList = new ArrayList<String>();
+        truthConstants = new Hashtable<String, Double>();
+        queries = new ArrayList<Query>();
+        kb = new KnowledgeBase();
+        KnowledgeBase.semantics = FuzzyLogic.LUKASIEWICZ;
+    }
+
+
+    /**
+     * Main program.
+     * @param args Name of the input file.
+     * @throws FuzzyOntologyException The fuzzy ontology is inconsistent.
+     * @throws IOException Input-output error.
+     * @throws TokenMgrError Parsing error.
+     */
+	public static void main(String[] args)
+	throws FuzzyOntologyException, IOException, TokenMgrError
+	{
+		ConfigReader.loadParameters(CONFIG_FILE, args);
+        try 
+        {
+	        Parser parser = new Parser(new FileInputStream(args[0]));
+	        parser.Start();
+	        kb.solveKB();
+	
+	        for(Query query : queries)
+	        {
+	          if ( (query instanceof AllInstancesQuery) && kb.getIndividuals().values().isEmpty() )
+	          	System.out.println(query.toString() + " There are no individuals in the fuzzy KB");
+	          else
+	          {
+                Solution result = query.solve(kb);
+                if (result.isConsistentKB())
+                    System.out.println(query.toString() + result);
+                    // System.out.print(" ; " + query.toString() + result);
+            	else
+                    System.out.println("KnowledgeBase inconsistent : Answer is 1.0.");
+	          }
+
+                System.out.println("Time (s): " + query.getTotalTime());
+                // System.out.print(" ; " + query.getTotalTime());
+                if (kb.showLanguage)
+                    System.out.println("The language of the KB is " + kb.getLanguage());
+
+                System.out.println();
+	        }
+        }
+		catch (InconsistentOntologyException e)
+		{
+			 System.out.println("KnowledgeBase inconsistent : Any answer is 1.0.");
+		}
+		catch (java.io.FileNotFoundException e)
+		{
+			System.out.println("Error: File " + args[0] + " not found.");
+		}
+		catch (ParseException e)
+		{
+	 		System.out.println("Parsing error: " + e);
+		}
+		catch (java.lang.NullPointerException e)
+		{
+			System.out.println(e);
+		}
+	}
+
+
+        /**
+         * Gets a KB.
+         * @return A knowledge base obtained as a result of the parsing.
+         */
+		public KnowledgeBase getKB()
+		{
+		        return kb;
+		}
+
+
+        /**
+         * Clears a KB.
+         */
+        public void clearKB()
+        {
+                kb = new KnowledgeBase();
+        }
+
+
+        /**
+         * Gets the queries in the file.
+         * @return A list of queries obtained as a result of the parsing.
+         */
+        public ArrayList<Query> getQueries()
+        {
+                return queries;
+        }
+
+
+        /**
+		 * Creates a fuzzy KB from an external file.
+		 * @param fileName Name of the input file.
+         * @return A knowledge base obtained as a result of the parsing.
+		 */
+        public static KnowledgeBase getKB(String fileName)
+        {
+        try
+        {
+            Parser parser = new Parser(new FileInputStream(fileName));
+                KnowledgeBase.semantics = FuzzyLogic.LUKASIEWICZ;
+            parser.Start();
+            return parser.getKB();
+        }
+        catch (Exception e)
+        {
+            System.out.println("Error while loading file " + fileName + ".");
+            return null;
+        }
+        }
+
+
+        /**
+		 * Checks whether a concept is abstract.
+		 */
+        private void checkAbstract(Concept c) throws FuzzyOntologyException
+        {
+                if (c.isConcrete())
+                        Util.error("Error: Concept " + c + " should be abstract.");
+        }
+
+
+}
+
+PARSER_END(Parser)
+
+SKIP:
+{
+	" "|"\t"
+}
+
+SPECIAL_TOKEN:
+{
+	<SINGLE_LINE_COMMENT: ("#"|"%") (~["\n","\r"])* ("\n"|"\r"|"\r\n")>
+}
+
+TOKEN:{
+	<EOL : "\n"|"\r"|"\r\n">
+}
+
+TOKEN:
+{
+	<INSTANCE : "instance">
+	| <MAX_INSTANCE_QUERY : "max-instance?">
+	| <MIN_INSTANCE_QUERY : "min-instance?">
+	| <ALL_INSTANCE_QUERY : "all-instances?">
+	| <MAX_RELATED_QUERY : "max-related?">
+	| <MIN_RELATED_QUERY : "min-related?">
+	| <MAX_SUBSUMES_QUERY : "max-subs?">
+	| <MAX_G_SUBSUMES_QUERY : "max-g-subs?">
+	| <MAX_L_SUBSUMES_QUERY : "max-l-subs?">
+	| <MAX_KD_SUBSUMES_QUERY : "max-kd-subs?">
+	| <MIN_SUBSUMES_QUERY : "min-subs?">
+	| <MIN_G_SUBSUMES_QUERY : "min-g-subs?">
+	| <MIN_L_SUBSUMES_QUERY : "min-l-subs?">
+	| <MIN_KD_SUBSUMES_QUERY : "min-kd-subs?">
+	| <MAX_SATISFIABLE_QUERY : "max-sat?">
+	| <MIN_SATISFIABLE_QUERY : "min-sat?">
+	| <CLASSIFY : "classify?">
+	| <MAX_QUERY : "max-var?">
+	| <MIN_QUERY : "min-var?">
+	| <SATISFIABLE_QUERY : "sat?">
+	| <LOM_DEFUZZIFY_QUERY : "defuzzify-lom?">
+	| <SOM_DEFUZZIFY_QUERY : "defuzzify-som?">
+	| <MOM_DEFUZZIFY_QUERY : "defuzzify-mom?">
+	| <BNP_QUERY : "bnp?">
+	| <DEFINE_TRUTH_CONSTANT : "define-truth-constant">
+	| <DEFINE_CONCEPT : "define-concept">
+	| <DEFINE_PRIMITIVE_CONCEPT : "define-primitive-concept">
+	| <EQUIVALENT_CONCEPTS : "equivalent-concepts">
+	| <DEFINE_FUZZY_CONCEPT : "define-fuzzy-concept">
+	| <DEFINE_FUZZY_NUMBER : "define-fuzzy-number">
+	| <DEFINE_FUZZY_NUMBER_RANGE : "define-fuzzy-number-range">
+	| <DEFINE_FUZZY_SIMILARITY: "define-fuzzy-similarity">
+	| <DEFINE_FUZZY_EQUIVALENCE: "define-fuzzy-equivalence">
+	| <RELATED : "related">
+	| <DEFINE_MODIFIER : "define-modifier">
+	| <FUNCTIONAL : "functional">
+	| <TRANSITIVE : "transitive">
+	| <REFLEXIVE : "reflexive">
+	| <SYMMETRIC : "symmetric">
+	| <IMPLIES_ROLE : "implies-role">
+	| <INVERSE : "inverse">
+	| <INVERSE_FUNCTIONAL : "inverse-functional">
+	| <DISJOINT : "disjoint">
+	| <DISJOINT_UNION : "disjoint-union">
+	| <RANGE : "range">
+	| <DOMAIN : "domain">
+	| <CONSTRAINTS : "constraints">
+	| <FUZZY_LOGIC : "define-fuzzy-logic"> 
+	| <CRISP_CONCEPT : "crisp-concept">
+	| <CRISP_ROLE : "crisp-role">
+}
+
+TOKEN:{
+	<COM : "\"">
+}
+
+TOKEN:
+{
+	<AND : "and">
+	| <G_AND : "g-and">
+	| <L_AND : "l-and">
+	| <IMPLIES : "implies">
+	| <G_IMPLIES : "g-implies">
+	| <KD_IMPLIES : "kd-implies">
+	| <L_IMPLIES : "l-implies">
+	| <Z_IMPLIES : "z-implies">
+	| <OR : "or">
+	| <G_OR : "g-or">
+	| <L_OR : "l-or">
+	| <NOT : "not">
+	| <SOME : "some">
+	| <HAS_VALUE : "b-some">
+	| <ALL : "all">
+	| <TOP : "*top*">
+	| <BOTTOM : "*bottom*">
+	| <W_SUM : "w-sum">
+	| <W_SUM_ZERO : "w-sum-zero">
+	| <W_MAX : "w-max">
+	| <W_MIN : "w-min">
+	| <SELF : "self">
+	| <UPPER_APPROX : "ua">
+	| <LOWER_APPROX : "la">
+	| <OWA : "owa">
+	| <QOWA : "q-owa">
+	| <CHOQUET : "choquet">
+	| <SUGENO : "sugeno">
+	| <QSUGENO : "q-sugeno">
+	| <TIGHT_UPPER_APPROX : "tua">
+	| <TIGHT_LOWER_APPROX : "tla">
+	| <LOOSE_UPPER_APPROX : "lua">
+	| <LOOSE_LOWER_APPROX : "lla">
+	| <FUZZY_NUMBER_ADD : "f+" >
+	| <FUZZY_NUMBER_MINUS : "f-" >
+	| <FUZZY_NUMBER_MULT : "f*" >
+	| <FUZZY_NUMBER_DIV : "f/" >
+	| <SIGMA_COUNT : "sigma-count" >
+}
+
+TOKEN:
+{
+	<CRISP : "crisp">
+	| <LS : "left-shoulder">
+	| <RS : "right-shoulder">
+	| <TRI : "triangular">
+	| <TRAP : "trapezoidal">
+	| <LINEAR : "linear">
+	| <MODIFIED : "modified">
+	| <LM : "linear-modifier">
+	| <TRIAM : "triangular-modifier">
+}
+
+TOKEN:
+{
+	<SHOW_VARIABLES : "show-variables">
+	| <SHOW_ABSTRACT_FILLER : "show-abstract-fillers">
+	| <SHOW_ABSTRACT_FILLER_FOR : "show-abstract-fillers-for">
+	| <SHOW_CONCRETE_FILLER : "show-concrete-fillers">
+	| <SHOW_CONCRETE_FILLER_FOR : "show-concrete-fillers-for">
+	| <SHOW_CONCRETE_FILLER_AND_LABELS: "show-concrete-instance-for">
+	| <SHOW_INSTANCES : "show-instances">
+	| <SHOW_CONCEPTS : "show-concepts">
+	| <SHOW_LANGUAGE : "show-language">
+}
+
+TOKEN:
+{
+	<FR : "free">
+	| <BV : "binary">
+}
+
+TOKEN:
+{
+	<LUKASIEWICZ : "lukasiewicz">
+	| <ZADEH : "zadeh">
+	| <CLASSICAL : "classical">
+}
+
+
+TOKEN:
+{
+	<PLUS : "+">
+	| <MINUS : "-">
+	| <STAR : "*">
+	| <LESS : "<=">
+	| <GRE : ">=">
+	| <EQL : "=">
+}
+
+TOKEN:
+{
+    <NUMBER: ("-")? (["0"-"9"])* (".")? (["0"-"9"])+ ( ["e","E"] (["+","-"])? (["0"-"9"])+ )? >
+}
+
+TOKEN:
+{
+	<IDENTIFIER: ( ["a"-"z", "A"-"Z", "'", "_", "-", "0"-"9", "@", ".", ":", "/", "#"] )*
+	["a"-"z", "A"-"Z", "_", "<", "$" ]
+	( ["a"-"z", "A"-"Z", "'", "_", "-", "0"-"9", "$", "@", ".", ":", "/", "#", "+", ":", ">", "<" ] )*  >
+}
+
+TOKEN:
+{
+	<OP : "(">
+	| <CP : ")">
+	| <OSB : "[">
+	| <CSB : "]">
+	| <OCB : "{">
+	| <CCB : "}">
+	| <COMMENT_MARK :"#">
+	| <COMMA : ",">
+}
+
+TOKEN:
+{
+	<STRING_TYPE: "*string*" >
+    |  <BOOLEAN_TYPE: "*boolean*" >
+	|  <NUMBER_TYPE: "*real*" | "*integer*">
+}
+
+
+/**
+* Starts the parsing.
+* @throws ParseException
+* @throws FuzzyOntologyException
+*/
+public void Start() throws FuzzyOntologyException, InconsistentOntologyException :
+{ KnowledgeBase.semantics= FuzzyLogic.LUKASIEWICZ; }
+{
+	(
+		Statement()
+	)*
+	<EOF>
+}
+
+
+/**
+ * Processes a fuzzyDL statement.
+ */
+private void Statement() throws FuzzyOntologyException, InconsistentOntologyException :
+{}
+{
+	LOOKAHEAD(2)
+	FuzzyLogicDefinition()
+|
+	LOOKAHEAD(2)
+	ShowStatement()
+|
+	LOOKAHEAD(2)
+	Definition()
+|
+	LOOKAHEAD(2)
+	Assertion()
+|
+	LOOKAHEAD(2)
+	Query()
+|
+	LOOKAHEAD(2)
+	Terminology()
+|
+	LOOKAHEAD(2)
+	RoleAxiom()
+|
+	LOOKAHEAD(2)
+	Inequation()
+|
+	LOOKAHEAD(2)
+	Bound()
+|
+	LOOKAHEAD(2)
+	CrispDeclaration()
+|
+	LOOKAHEAD(2)
+	Constraints()
+|
+	LOOKAHEAD(2)
+	( <EOL> )
+}
+
+
+/**
+ * Processes a fuzzyDL definition.
+ */
+private void Definition() throws FuzzyOntologyException, InconsistentOntologyException :
+{
+	Concept co;
+	double a = 0;
+	double b = 0;
+	double c = 0;
+	double k1, k2, d;
+	Modifier mod;
+	Double double1, double2;
+	FuzzyConcreteConcept conc;
+	String conceptName, role;
+	String type, truthConstant;
+	Token t, K1, K2, A, B, C, D;
+	TriangularFuzzyNumber tri;
+}
+{
+	LOOKAHEAD(2)
+	<OP> <DEFINE_TRUTH_CONSTANT> t = <IDENTIFIER>  A = <NUMBER> <CP>
+	{
+		a = Double.parseDouble(A.image);
+		truthConstant = t.image;
+	
+		if (truthConstants.containsKey(truthConstant))
+			Util.error("Error: Truth constant " + truthConstant + " already defined.");
+	
+		// Add <truthConstant, n> to hashtable
+		truthConstants.put(truthConstant, a);
+	}
+|
+	LOOKAHEAD(2)
+	<OP> <DEFINE_FUZZY_SIMILARITY> role = Role() <CP>
+	{
+		kb.addSimilarityRelation(role);
+	}
+|
+	LOOKAHEAD(2)
+	<OP> <DEFINE_FUZZY_EQUIVALENCE> role = Role() <CP>
+	{
+		kb.addEquivalenceRelation(role);
+	}
+|
+	LOOKAHEAD(4)
+	<OP> <RANGE> role = Role() type = NumericalType() double1 = Number() double2 = Number() <CP>
+	{
+		if (type.equals("*real*"))
+			kb.defineRealConcreteFeature(role, double1, double2);
+		else // type.equals("*integer*")
+		{
+			if (! Util.hasIntegerValue(double1) || ! Util.hasIntegerValue(double2) )
+				Util.error("Error: " + double1 + " and " + double2 + " should be integer numbers.");
+			kb.defineIntegerConcreteFeature(role, new Integer(double1.intValue()), new Integer(double2.intValue()) );
+		}
+	}
+|
+	LOOKAHEAD(4)
+	<OP> <RANGE> role = Role() <STRING_TYPE> <CP>
+	{
+		kb.defineStringConcreteFeature(role);
+	}
+|
+	LOOKAHEAD(4)
+	<OP> <RANGE> role = Role() <BOOLEAN_TYPE> <CP>
+	{
+		kb.defineBooleanConcreteFeature(role);
+	}
+|
+	LOOKAHEAD(4)
+	<OP> <RANGE> role = Role() co = Concept() <CP>
+	{
+		kb.checkRole(role, co);
+		kb.roleRange(role, co);
+	}
+|
+	LOOKAHEAD(4)
+	<OP> <DEFINE_FUZZY_CONCEPT> t = <IDENTIFIER> <CRISP> <OP> K1 = <NUMBER> <COMMA> K2 = <NUMBER> <COMMA> A = <NUMBER> <COMMA> B = <NUMBER> <CP> <CP>
+	{
+		conceptName = t.image;
+		if (kb.concreteConcepts.get(conceptName) !=  null)
+			Util.error("Error: Fuzzy concept " + conceptName + " has to be defined before being used.");
+	
+		k1 = Double.parseDouble(K1.image);
+		k2 = Double.parseDouble(K2.image);
+		a = Double.parseDouble(A.image);
+		b = Double.parseDouble(B.image);
+		conc = new CrispConcreteConcept(conceptName, k1, k2, a, b);
+		kb.addConcept(conceptName, conc);
+		kb.concreteFuzzyConcepts = true;
+	}
+|
+	LOOKAHEAD(2)
+	<OP> <DEFINE_FUZZY_NUMBER_RANGE> K1 = <NUMBER> K2 = <NUMBER> <CP>
+	{
+		TriangularFuzzyNumber.setRange(Double.parseDouble(K1.image), Double.parseDouble(K2.image));
+	}
+|
+	LOOKAHEAD(2)
+	<OP> <DEFINE_FUZZY_NUMBER> t = <IDENTIFIER> tri = TriangularFuzzyNumber() <CP>
+	{
+		conceptName = t.image;
+		if (kb.fuzzyNumbers.get(conceptName) !=  null)
+			Util.error("Error: Fuzzy number " + conceptName + " has already been defined.");
+		kb.addFuzzyNumber(conceptName, tri);
+		kb.concreteFuzzyConcepts = true;
+	}
+|
+	LOOKAHEAD(4)
+	<OP> <DEFINE_FUZZY_CONCEPT> t = <IDENTIFIER> <LS> <OP> K1 = <NUMBER> <COMMA> K2 = <NUMBER> <COMMA> A = <NUMBER> <COMMA> B = <NUMBER> <CP> <CP>
+	{
+		conceptName = t.image;
+		if (kb.getLogic() == FuzzyLogic.CLASSICAL)
+			Util.error("Error: Fuzzy concept " + conceptName + " cannot be used with the classical reasoner.");
+		if (kb.concreteConcepts.get(conceptName) !=  null)
+			Util.error("Error: Fuzzy concept " + conceptName + " has to be defined before being used.");
+	
+		k1 = Double.parseDouble(K1.image);
+		k2 = Double.parseDouble(K2.image);
+		a = Double.parseDouble(A.image);
+		b = Double.parseDouble(B.image);
+		conc = new LeftConcreteConcept(conceptName, k1, k2, a, b);
+		kb.addConcept(conceptName, conc);
+		kb.concreteFuzzyConcepts = true;
+	}
+|
+	LOOKAHEAD(4)
+	<OP> <DEFINE_FUZZY_CONCEPT> t = <IDENTIFIER> <RS> <OP> K1 = <NUMBER> <COMMA> K2 = <NUMBER> <COMMA> A = <NUMBER> <COMMA> B = <NUMBER> <CP> <CP>
+	{
+		conceptName = t.image;
+		if (kb.getLogic() == FuzzyLogic.CLASSICAL)
+			Util.error("Error: Fuzzy concept " + conceptName + " cannot be used with the classical reasoner.");
+		if (kb.concreteConcepts.get(conceptName) !=  null)
+			Util.error("Error: Fuzzy concept " + conceptName + " has to be defined before being used.");
+	
+		k1 = Double.parseDouble(K1.image);
+		k2 = Double.parseDouble(K2.image);
+		a = Double.parseDouble(A.image);
+		b = Double.parseDouble(B.image);
+		conc = new RightConcreteConcept(conceptName, k1, k2, a, b);
+		kb.addConcept(conceptName, conc);
+		kb.concreteFuzzyConcepts = true;
+	}
+|
+	LOOKAHEAD(4)
+	<OP> <DEFINE_FUZZY_CONCEPT> t = <IDENTIFIER> <TRI> <OP> K1 = <NUMBER> <COMMA> K2 = <NUMBER> <COMMA> A = <NUMBER> <COMMA> B = <NUMBER> <COMMA> C = <NUMBER> <CP> <CP>
+	{
+		conceptName = t.image;
+		if (kb.getLogic() == FuzzyLogic.CLASSICAL)
+			Util.error("Error: Fuzzy concept " + conceptName + " cannot be used with the classical reasoner.");
+		if (kb.concreteConcepts.get(conceptName) !=  null)
+			Util.error("Error: Fuzzy concept " + conceptName + " has to be defined before being used.");
+	
+		k1 = Double.parseDouble(K1.image);
+		k2 = Double.parseDouble(K2.image);
+		a = Double.parseDouble(A.image);
+		b = Double.parseDouble(B.image);
+		c = Double.parseDouble(C.image);
+		conc = new TriangularConcreteConcept(conceptName, k1, k2, a, b, c);
+		kb.addConcept(conceptName, conc);
+		kb.concreteFuzzyConcepts = true;
+	}
+|
+	LOOKAHEAD(4)
+	<OP> <DEFINE_FUZZY_CONCEPT> t = <IDENTIFIER> <TRAP> <OP> K1 = <NUMBER> <COMMA> K2 = <NUMBER> <COMMA> A = <NUMBER> <COMMA> B = <NUMBER> <COMMA> C = <NUMBER> <COMMA> D = <NUMBER> <CP> <CP>
+	{
+		conceptName = t.image;
+		if (kb.getLogic() == FuzzyLogic.CLASSICAL)
+			Util.error("Error: Fuzzy concept " + conceptName + " cannot be used with the classical reasoner.");
+		if (kb.concreteConcepts.get(conceptName) !=  null)
+			Util.error("Error: Fuzzy concept " + conceptName + " has to be defined before being used.");
+	
+		k1 = Double.parseDouble(K1.image);
+		k2 = Double.parseDouble(K2.image);
+		a = Double.parseDouble(A.image);
+		b = Double.parseDouble(B.image);
+		c = Double.parseDouble(C.image);
+		d = Double.parseDouble(D.image);
+		conc = new TrapezoidalConcreteConcept(conceptName, k1, k2, a, b, c, d);
+		kb.addConcept(conceptName, conc);
+		kb.concreteFuzzyConcepts = true;
+	}
+|
+	LOOKAHEAD(4)
+	<OP> <DEFINE_FUZZY_CONCEPT> t = <IDENTIFIER> <LINEAR> <OP> K1 = <NUMBER> <COMMA> K2 = <NUMBER> <COMMA> A = <NUMBER> <COMMA> B = <NUMBER> <CP> <CP>
+	{
+		conceptName = t.image;
+		if (kb.getLogic() == FuzzyLogic.CLASSICAL)
+			Util.error("Error: Fuzzy concept " + conceptName + " cannot be used with the classical reasoner.");
+		if (kb.concreteConcepts.get(conceptName) !=  null)
+			Util.error("Error: Fuzzy concept " + conceptName + " has to be defined before being used.");
+	
+		k1 = Double.parseDouble(K1.image);
+		k2 = Double.parseDouble(K2.image);
+		a = Double.parseDouble(A.image);
+		b = Double.parseDouble(B.image);
+		conc = new LinearConcreteConcept(conceptName, k1, k2, a, b);
+		kb.addConcept(conceptName, conc);
+		kb.concreteFuzzyConcepts = true;
+	}
+|
+	LOOKAHEAD(4)
+	<OP> <DEFINE_FUZZY_CONCEPT> t = <IDENTIFIER> <MODIFIED> <OP> mod = Modifier() <COMMA> C = <IDENTIFIER> <CP> <CP>
+	{
+		conceptName = C.image;
+		if (kb.getLogic() == FuzzyLogic.CLASSICAL)
+			Util.error("Error: Fuzzy concept " + conceptName + " cannot be used with the classical reasoner.");
+		if (kb.concreteConcepts.get(conceptName) ==  null)
+			Util.error("Error: Fuzzy concept " + conceptName + " has to be defined before being used.");
+		if (kb.concreteConcepts.get(t.image) !=  null)
+			Util.error("Error: Fuzzy concept " + t.image + " has to be defined before being used.");
+	
+		conc = new ModifiedConcreteConcept(t.image, mod, kb.concreteConcepts.get(conceptName));
+		kb.addConcept(t.image, conc);
+		kb.concreteFuzzyConcepts = true;
+	}
+|
+	LOOKAHEAD(4)
+	<OP> <DEFINE_MODIFIER> t = <IDENTIFIER> <LM> <OP> B = <NUMBER> <CP> <CP>
+	{
+		conceptName = t.image;
+		if (kb.getLogic() == FuzzyLogic.CLASSICAL)
+			Util.error("Error: Modifier " + conceptName + " cannot be used with the classical reasoner.");
+	
+		kb.addModifier(conceptName, new LinearModifier(conceptName, Double.parseDouble(B.image)));
+	}
+|
+	LOOKAHEAD(4)
+	<OP> <DEFINE_MODIFIER> t = <IDENTIFIER> <TRIAM> <OP> A = <NUMBER> <COMMA> B = <NUMBER> <COMMA> C = <NUMBER> <CP> <CP>
+	{
+		conceptName = t.image;
+		if (kb.getLogic() == FuzzyLogic.CLASSICAL)
+			Util.error("Error: Modifier " + conceptName + " cannot be used with the classical reasoner.");
+	
+		kb.addModifier(conceptName, new TriangularModifier(conceptName, Double.parseDouble(A.image), Double.parseDouble(B.image), Double.parseDouble(C.image)));
+	}
+	}
+	
+	
+	/**
+	 * Defines the fuzzy logic for the knowledge base
+	 */
+	private void FuzzyLogicDefinition() :
+	{
+	}
+	{
+	LOOKAHEAD(3)
+	<OP> <FUZZY_LOGIC> <LUKASIEWICZ> <CP>
+	{
+		kb.setLogic(FuzzyLogic.LUKASIEWICZ); 
+	}
+|
+	LOOKAHEAD(3)
+	<OP> <FUZZY_LOGIC> <ZADEH> <CP>
+	{
+		kb.setLogic(FuzzyLogic.ZADEH); 
+	}
+|
+	LOOKAHEAD(3)
+	<OP> <FUZZY_LOGIC> <CLASSICAL> <CP>
+	{
+		kb.setLogic(FuzzyLogic.CLASSICAL); 
+	}
+}
+
+
+/**
+ * Processes a fuzzyDL showing statement.
+ */
+private void ShowStatement() throws FuzzyOntologyException, InconsistentOntologyException :
+{
+	Concept c;
+	Token cfc;
+	String role;
+	String indName;
+	Variable var;
+	ArrayList<FuzzyConcreteConcept> ar = new ArrayList<FuzzyConcreteConcept>();
+}
+{
+	LOOKAHEAD(2)
+	<OP> <SHOW_VARIABLES>
+		(
+			var = Variable()
+			{
+				kb.milp.showVars.addVariable(var, var.toString());
+			}
+		)+
+	<CP>
+|
+	LOOKAHEAD(2)
+	<OP> <SHOW_CONCRETE_FILLER>
+		(
+			role = Role()
+			{
+				 if (kb.concreteRoles.contains(role))
+					kb.milp.showVars.addConcreteFillerToShow(role);
+				 else
+					Util.error("Error: show-concrete-fillers can only be used with concrete roles.");
+			}
+		)+
+	<CP>
+|
+	LOOKAHEAD(2)
+	<OP> <SHOW_CONCRETE_FILLER_FOR>
+			indName = Role()
+		(
+			role = Role()
+			{
+				 if (kb.concreteRoles.contains(role))
+					kb.milp.showVars.addConcreteFillerToShow(role, indName);
+				 else
+					Util.error("Error: show-concrete-fillers can only be used with concrete roles.");
+			}
+		)+
+	<CP>
+|
+	LOOKAHEAD(2)
+	<OP> <SHOW_CONCRETE_FILLER_AND_LABELS>
+			indName = Role() role = Role()
+			{
+				 if (!kb.concreteRoles.contains(role))
+					Util.error("Error: show-concrete-fillers can only be used with concrete roles.");
+			}
+		(
+			cfc = <IDENTIFIER>
+			{
+				String name = cfc.image;
+				c = kb.concreteConcepts.get(name);
+				if (c ==  null)
+					Util.error("Error: Concrete fuzzy concept " + name + " has not been defined.");
+				int type = c.getType();
+				if ((type !=  Concept.CONCRETE) && (type !=  Concept.FUZZY_NUMBER))
+					Util.error("Error: " + name + " is not a concrete fuzzy concept.");
+			ar.add((FuzzyConcreteConcept) c);
+			}
+		)+
+		{
+		  kb.milp.showVars.addConcreteFillerToShow(role, indName, ar);
+		}
+	<CP>
+|
+	LOOKAHEAD(2)
+	<OP> <SHOW_ABSTRACT_FILLER>
+			(
+				role = Role()
+				{
+					if (kb.concreteRoles.contains(role))
+						Util.error("Error: show-abstract-fillers can only be used with abstract roles.");
+					kb.milp.showVars.addAbstractFillerToShow(role);
+				}
+		)*
+	<CP>
+|
+	LOOKAHEAD(2)
+	<OP> <SHOW_ABSTRACT_FILLER_FOR> indName = Role() role = Role()
+			(
+				role = Role()
+				{
+					if (kb.concreteRoles.contains(role))
+						Util.error("Error: show-abstract-fillers-for can only be used with abstract roles.");
+					else
+						kb.milp.showVars.addAbstractFillerToShow(role, indName);
+				}
+			)*
+	<CP>
+|
+	LOOKAHEAD(2)
+	<OP> <SHOW_INSTANCES>
+		(
+			c = Concept()
+			{
+				kb.milp.showVars.addConceptToShow(c.toString());
+			}
+		)+
+	<CP>
+|
+	LOOKAHEAD(2)
+	<OP> <SHOW_CONCEPTS>
+		(
+			indName = Role()
+			{
+				kb.milp.showVars.addIndividualToShow(indName);
+			}
+		)+
+	<CP>
+|
+	LOOKAHEAD(2)
+	<OP> <SHOW_LANGUAGE>
+		{
+			kb.showLanguage = true;
+		}
+	<CP>
+}
+
+
+/**
+ * Processes a fuzzyDL RBox axiom.
+ */
+private void RoleAxiom() throws FuzzyOntologyException :
+{
+	Double d = 1.0;
+	String role, roleC, roleP, invRole;
+}
+{
+	LOOKAHEAD(2)
+	<OP> <FUNCTIONAL> role = Role() <CP>
+	{
+		kb.roleIsFunctional(role);
+	}
+|
+	LOOKAHEAD(2)
+	<OP> <TRANSITIVE> role = Role() <CP>
+	{
+		kb.roleIsTransitive(role);
+	}
+|
+	LOOKAHEAD(2)
+	<OP> <REFLEXIVE> role = Role() <CP>
+	{
+		kb.roleIsReflexive(role);
+	}
+|
+	LOOKAHEAD(2)
+	<OP> <SYMMETRIC> role = Role() <CP>
+	{
+		kb.roleIsSymmetric(role);
+	}
+|
+	LOOKAHEAD(2)
+	<OP> <INVERSE> role = Role() invRole = Role() <CP>
+	{
+		if (kb.concreteRoles.contains(role))
+			Util.error("Error: Concrete role " + role + " cannot have an inverse role.");
+		else if (kb.concreteRoles.contains(invRole))
+			Util.error("Error: Concrete role " + invRole + " cannot have an inverse role.");
+		else
+			kb.addInverseRoles(role,invRole); 
+	}
+|
+	LOOKAHEAD(2)
+	<OP> <INVERSE_FUNCTIONAL> role = Role() <CP>
+	{
+		if (kb.concreteRoles.contains(role))
+			Util.error("Error: Concrete role " + role + " cannot have an inverse role.");
+		else
+			kb.roleIsInverseFunctional(role); 
+	}
+|
+	LOOKAHEAD(2)
+	<OP> <IMPLIES_ROLE> roleC = Role() roleP = Role() [ d = Number() ] <CP>
+	{
+		kb.roleImplies(roleC,roleP,d);
+	}
+}
+
+
+/**
+ * Processes a fuzzyDL list of constraints.
+ */
+private void Constraints() :
+{}
+{
+	<OP> <CONSTRAINTS> (Constraint())+ <CP>
+}
+
+
+/**
+ * Processes a fuzzyDL bound.
+ */
+private void CrispDeclaration() throws FuzzyOntologyException, InconsistentOntologyException :
+{
+	Concept c;
+	String r;
+}
+{
+	LOOKAHEAD(2) <OP> <CRISP_CONCEPT> (c = Concept()
+	{
+		kb.setCrispConcept(c);
+	}
+	)+ <CP>
+|
+	<OP> <CRISP_ROLE> (r = Role() 
+	{
+		kb.setCrispRole(r);
+	}
+	)+ <CP>
+}
+
+
+/**
+ * Processes a fuzzyDL constraint.
+ */
+private void Constraint() :
+{}
+{
+	LOOKAHEAD(2)
+	Bound()
+|
+	Inequation()
+}
+
+
+/**
+ * Processes a fuzzyDL bound.
+ */
+private void Bound() :
+{
+	Variable var;
+}
+{
+	LOOKAHEAD(2) <OP> <FR> var = Variable() <CP>
+	{
+		var.setType(Variable.FREE_VARIABLE);
+	}
+|
+	<OP> <BV> var = Variable() <CP>
+	{
+		var.setType(Variable.BINARY_VARIABLE);
+	}
+}
+
+
+/**
+ * Processes a fuzzyDL inequation.
+ */
+private void Inequation() :
+{
+	Expression expr;
+	double n;
+}
+{
+	<OP>
+	expr = Expression()
+	(
+	<LESS> n = Number()
+	{
+		kb.milp.addNewConstraint(Expression.addConstant(expr,-n), Inequation.LE);
+	}
+|
+	<GRE> n = Number()
+	{
+		kb.milp.addNewConstraint(Expression.addConstant(expr,-n), Inequation.GE);
+	}
+|
+	<EQL> n = Number()
+	{
+		kb.milp.addNewConstraint(Expression.addConstant(expr,-n), Inequation.EQ);
+	}
+	)
+	<CP>
+}
+
+
+/**
+ * Gets a fuzzyDL expression.
+ */
+private Expression Expression() :
+{
+	Expression expr = new Expression();
+	Term term;
+	double n = 0;
+}
+{
+	(
+	LOOKAHEAD(2)
+	n = Number()
+	{
+		expr = new Expression(n);
+	}
+	(
+	<PLUS> term = Term()
+	{
+		expr = Expression.addTerm(expr,term);
+	}
+	)+
+|
+	term = Term()
+	{
+		expr = Expression.addTerm(expr,term);
+	}
+	(
+	<PLUS> term = Term()
+	{
+		expr = Expression.addTerm(expr,term);
+	}
+	)*
+	)
+	{
+		return expr;
+	}
+}
+
+
+/**
+ * Gets a fuzzyDL term.
+ */
+private Term Term() :
+{
+	double n;
+	Variable var;
+}
+{
+	var = Variable()
+	{
+		return new Term(1,var);
+	}
+|
+	n = Number() <STAR> var = Variable()
+	{
+		return new Term(n, var);
+	}
+}
+
+
+/**
+ * Processes a fuzzyDL ABox axiom.
+ */
+private void Assertion() throws FuzzyOntologyException, InconsistentOntologyException :
+{
+	Individual a,b;
+	Concept c;
+	Degree d;
+	String role;
+}
+{
+	LOOKAHEAD(3)
+	<OP> <INSTANCE> a = Individual() c = Concept() d = Degree() <CP>
+	{
+		kb.addAssertion(a, c, d);
+	}
+|
+	LOOKAHEAD(4)
+	<OP> <RELATED> a = Individual() b = Individual() role = Role() d = Degree() <CP>
+	{
+		// Add role is abstract
+		if (kb.concreteRoles.contains(role))
+			Util.error("Error: Role " + role + " cannot be concrete and abstract.");
+	
+		kb.addRelation(a, role, b, d);
+	}
+}
+
+/**
+ * Processes a fuzzyDL TBox.
+ */
+private void Terminology() throws FuzzyOntologyException, InconsistentOntologyException :
+{
+	Token t;
+	Degree deg;
+	String conceptName, roleName;
+	Concept conc, conc1, conc2;
+}
+{
+	LOOKAHEAD(2)
+	<OP> <DEFINE_CONCEPT> t = <IDENTIFIER> conc = Concept() <CP>
+	{
+		conceptName = t.image;
+		if (conc.isConcrete())
+			Util.error(conc + " is concrete and cannot appear in a TBox axiom");
+		kb.defineConcept(conceptName, conc);
+	}
+|
+	LOOKAHEAD(2)
+	<OP> <DEFINE_PRIMITIVE_CONCEPT> t = <IDENTIFIER> conc = Concept() <CP>
+	{
+		conceptName = t.image;
+		kb.defineAtomicConcept(conceptName, conc, GeneralConceptInclusion.ZADEH, 1);
+	}
+|
+	LOOKAHEAD(2)
+	<OP> <EQUIVALENT_CONCEPTS> conc1 = Concept() conc2 = Concept() <CP>
+	{
+		kb.defineEquivalentConcepts(conc1, conc2);
+	}
+|
+	LOOKAHEAD(2)
+	<OP> <IMPLIES> conc1 = Concept() conc2 = Concept() deg = Degree() <CP>
+	{
+		kb.implies(conc1, conc2, deg);
+	}
+|
+	LOOKAHEAD(2)
+	<OP> <G_IMPLIES> conc1 = Concept() conc2 = Concept() deg = Degree() <CP>
+	{
+		kb.gImplies(conc1, conc2, deg);
+	}
+|
+	LOOKAHEAD(2)
+	<OP> <L_IMPLIES> conc1 = Concept() conc2 = Concept() deg = Degree() <CP>
+	{
+		kb.lImplies(conc1, conc2, deg);
+	}
+|
+	LOOKAHEAD(2)
+	<OP> <KD_IMPLIES> conc1 = Concept() conc2 = Concept() deg = Degree() <CP>
+	{
+		kb.kdImplies(conc1, conc2, deg);
+	}
+|
+	LOOKAHEAD(2)
+	<OP> <Z_IMPLIES> conc1 = Concept() conc2 = Concept() deg = Degree() <CP>
+	{
+		kb.zImplies(conc1, conc2);
+	}
+|
+	LOOKAHEAD(2)
+	<OP> <DISJOINT> conc = Concept() {temporaryConceptsList.add(conc);}
+	(
+		conc = Concept() {temporaryConceptsList.add(conc);}
+	)+ <CP>
+	{
+		kb.addConceptsDisjoint(temporaryConceptsList);
+		temporaryConceptsList.clear();
+	}
+|
+	LOOKAHEAD(2)
+	<OP> <DISJOINT_UNION> conc = Concept() {temporaryConceptNamesList.add(conc.toString());}
+	(
+		conc = Concept() {temporaryConceptNamesList.add(conc.toString());}
+	)+ <CP>
+	{
+		kb.addDisjointUnionConcept(temporaryConceptNamesList);
+		temporaryConceptNamesList.clear();
+	}
+|
+	<OP> <DOMAIN> roleName = Role() conc = Concept() <CP>
+	{
+		kb.roleDomain(roleName, conc);
+	}
+}
+
+
+/**
+ * Processes a fuzzyDL query.
+ */
+private void Query() throws FuzzyOntologyException, InconsistentOntologyException :
+{
+	Individual a = null;
+	Individual b = null;
+	Concept c,c1,c2;
+	Expression expr;
+	String roleName;
+	TriangularFuzzyNumber tri;
+}
+{
+	LOOKAHEAD(2)
+	<OP> <MIN_INSTANCE_QUERY> a = Individual() c = Concept() <CP>
+	{
+		queries.add(new MinInstanceQuery(c,a));
+	}
+|
+	LOOKAHEAD(2)
+	<OP> <MAX_INSTANCE_QUERY> a = Individual() c = Concept() <CP>
+	{
+		queries.add(new MaxInstanceQuery(c,a));
+	}
+|
+	LOOKAHEAD(2)
+	<OP> <ALL_INSTANCE_QUERY> c = Concept() <CP>
+	{
+		queries.add(new AllInstancesQuery(c));
+	}
+|
+	LOOKAHEAD(2)
+	<OP> <MIN_RELATED_QUERY> a = Individual() b = Individual() roleName = Role() <CP>
+	{
+		if (kb.concreteRoles.contains(roleName))
+			Util.error("Error: Role " + roleName + " cannot be concrete and abstract.");
+	
+		kb.abstractRoles.add(roleName);
+		queries.add(new MinRelatedQuery(a,b,roleName));
+	}
+|
+	LOOKAHEAD(2)
+	<OP> <MAX_RELATED_QUERY> a = Individual() b = Individual() roleName = Role() <CP>
+	{
+		if (kb.concreteRoles.contains(roleName))
+			Util.error("Error: Role " + roleName + " cannot be concrete and abstract.");
+	
+		kb.abstractRoles.add(roleName);
+			queries.add(new MaxRelatedQuery(a,b,roleName));
+	}
+|
+	LOOKAHEAD(2)
+	<OP> <MAX_SUBSUMES_QUERY> c1 = Concept() c2 = Concept() <CP>
+	{
+		if (kb.getLogic() == FuzzyLogic.LUKASIEWICZ)
+			queries.add(new MaxSubsumesQuery(c1, c2, MaxSubsumesQuery.LUKASIEWICZ));
+		else
+			queries.add(new MaxSubsumesQuery(c1, c2, MaxSubsumesQuery.ZADEH));
+	}
+|
+	LOOKAHEAD(2)
+	<OP> <MAX_L_SUBSUMES_QUERY> c1 = Concept() c2 = Concept() <CP>
+	{
+		queries.add(new MaxSubsumesQuery(c1, c2, MaxSubsumesQuery.LUKASIEWICZ));
+	}
+|
+	LOOKAHEAD(2)
+	<OP> <MAX_G_SUBSUMES_QUERY> c1 = Concept() c2 = Concept() <CP>
+	{
+		queries.add(new MaxSubsumesQuery(c1, c2, MaxSubsumesQuery.GOEDEL));
+	}
+|
+	LOOKAHEAD(2)
+	<OP> <MAX_KD_SUBSUMES_QUERY> c1 = Concept() c2 = Concept() <CP>
+	{
+		queries.add(new MaxSubsumesQuery(c1, c2, MaxSubsumesQuery.KLEENE_DIENES));
+	}
+|
+	LOOKAHEAD(2)
+	<OP> <MIN_SUBSUMES_QUERY> c1 = Concept() c2 = Concept() <CP>
+	{
+		if (kb.getLogic() == FuzzyLogic.LUKASIEWICZ)
+			queries.add(new MinSubsumesQuery(c1, c2, MaxSubsumesQuery.LUKASIEWICZ));
+		else
+			queries.add(new MinSubsumesQuery(c1, c2, MaxSubsumesQuery.ZADEH));
+	}
+|
+	LOOKAHEAD(2)
+	<OP> <MIN_L_SUBSUMES_QUERY> c1 = Concept() c2 = Concept() <CP>
+	{
+		queries.add(new MinSubsumesQuery(c1, c2, MaxSubsumesQuery.LUKASIEWICZ));
+	}
+|
+	LOOKAHEAD(2)
+	<OP> <MIN_G_SUBSUMES_QUERY> c1 = Concept() c2 = Concept() <CP>
+	{
+		queries.add(new MinSubsumesQuery(c1, c2, MinSubsumesQuery.GOEDEL));
+	}
+|
+	LOOKAHEAD(2)
+	<OP> <MIN_KD_SUBSUMES_QUERY> c1 = Concept() c2 = Concept() <CP>
+	{
+		queries.add(new MinSubsumesQuery(c1, c2, MinSubsumesQuery.KLEENE_DIENES));
+	}
+|
+	LOOKAHEAD(2)
+	<OP> <MAX_SATISFIABLE_QUERY> c = Concept() [ a = Individual() ] <CP>
+	{
+		if (a !=  null)
+			queries.add(new MaxSatisfiableQuery(c,a));
+		else
+			queries.add(new MaxSatisfiableQuery(c));
+	}
+|
+	 LOOKAHEAD(2)
+	 <OP> <MIN_SATISFIABLE_QUERY> c = Concept() [ a = Individual() ] <CP>
+	{
+		if (a !=  null)
+			queries.add(new MinSatisfiableQuery(c,a));
+		else
+			queries.add(new MinSatisfiableQuery(c));
+	}
+|
+	 LOOKAHEAD(2)
+	 <OP> <SATISFIABLE_QUERY> <CP>
+	{
+		queries.add(new KbSatisfiableQuery());
+	}
+| 
+	LOOKAHEAD(2)
+	<OP> <CLASSIFY> <CP>
+	{
+		queries.add(new ClassificationQuery());
+	}
+| 
+	LOOKAHEAD(2)
+	<OP> <MAX_QUERY> expr = Expression() <CP>
+	{
+		queries.add(new MaxQuery(expr));
+	}
+|
+	LOOKAHEAD(2)
+	<OP> <MIN_QUERY> expr = Expression() <CP>
+	{
+		queries.add(new MinQuery(expr));
+	}
+|
+	LOOKAHEAD(2)
+	<OP> <LOM_DEFUZZIFY_QUERY> c = Concept() a = Individual() roleName = Role() <CP>
+	{
+		if (kb.concreteFeatures.get(roleName) ==  null)
+			Util.error("Error: Feature " + roleName + " has not been defined.");
+		queries.add(new LomDefuzzifyQuery(c, a, roleName));
+	}
+|
+	LOOKAHEAD(2)
+	<OP> <SOM_DEFUZZIFY_QUERY> c = Concept() a = Individual() roleName = Role() <CP>
+	{
+		if (kb.concreteFeatures.get(roleName) ==  null)
+			Util.error("Error: Feature " + roleName + " has not been defined.");
+		queries.add(new SomDefuzzifyQuery(c, a, roleName));
+	}
+|
+	LOOKAHEAD(2)
+	<OP> <MOM_DEFUZZIFY_QUERY> c = Concept() a = Individual() roleName = Role() <CP>
+	{
+		if (kb.concreteFeatures.get(roleName) ==  null)
+			Util.error("Error: Feature " + roleName + " has not been defined.");
+		queries.add(new MomDefuzzifyQuery(c, a, roleName));
+	}
+|
+	LOOKAHEAD(2)
+	<OP> <BNP_QUERY> tri = TriangularFuzzyNumber() 
+	{
+		if (TriangularFuzzyNumber.hasDefinedRange() ==  false)
+			Util.error("Error: The range of the fuzzy numbers has to be defined before being used.");
+		queries.add(new BnpQuery(tri));
+	}
+	<CP>
+}
+
+
+/**
+ * Gets a function involving several features.
+ */
+private FeatureFunction FeatureFunction() :
+{
+	double n;
+	Token id;
+	FeatureFunction f1, f2;
+	ArrayList<FeatureFunction> f = new ArrayList<FeatureFunction>();
+}
+{
+	LOOKAHEAD(4)
+	<OP> f1 = FeatureFunction() (
+	( <MINUS> f2 = FeatureFunction() <CP> )
+	{	  
+		return new FeatureFunction(f1, f2);
+	}
+|
+	( <PLUS> f2 = FeatureFunction()
+	{
+		if (f.size() ==  0)
+			f.add(f1);
+		f.add(f2);
+	}
+	)+ <CP>
+	{	  
+		return new FeatureFunction(f);
+	}
+	)
+|
+	LOOKAHEAD(3)
+	n = Number()
+	{	  
+		return new FeatureFunction(n);
+	}
+|
+	LOOKAHEAD(4)
+	<OP> n = Number() [<STAR>] f1 = FeatureFunction() <CP>
+	{	  
+		return new FeatureFunction(n, f1);
+	}
+|
+	id = <IDENTIFIER>
+	{
+		return new FeatureFunction(id.image);
+	}
+}
+
+
+/**
+ * Gets a triangular fuzzy number.
+ */
+private TriangularFuzzyNumber TriangularFuzzyNumber() throws FuzzyOntologyException :
+{
+	Concept c;
+	Token name;
+	Token A, B, C;
+	double weight;
+	TriangularFuzzyNumber t1, t2;
+}
+{
+	LOOKAHEAD(3)
+	<OP> A = <NUMBER> <COMMA> B = <NUMBER> <COMMA> C = <NUMBER> <CP>
+	{	  
+		return new TriangularFuzzyNumber(Double.parseDouble(A.image), Double.parseDouble(B.image), Double.parseDouble(C.image));
+	}
+|
+	LOOKAHEAD(3)
+	name = <IDENTIFIER>
+	{
+		c = kb.fuzzyNumbers.get(name.image);
+		if (c ==  null)
+			Util.error("Error: concept " + name.image + " is not a fuzzy number.");
+		else
+			return ((TriangularFuzzyNumber) c);
+	}
+| 
+	LOOKAHEAD(3)
+	weight = Number()
+	{
+		return new TriangularFuzzyNumber(weight, weight, weight);
+	}
+|
+	LOOKAHEAD(3)
+	<OP> <FUZZY_NUMBER_ADD> t1 = TriangularFuzzyNumber() 
+	( t2 = TriangularFuzzyNumber()
+	{
+		t1 = TriangularFuzzyNumber.add(t1, t2);
+	}
+	)+
+	<CP>
+	{
+	return t1;
+	}	
+|
+	LOOKAHEAD(3)
+	<OP> <FUZZY_NUMBER_MINUS> t1 = TriangularFuzzyNumber() t2 = TriangularFuzzyNumber() <CP>
+	{
+		return TriangularFuzzyNumber.minus(t1, t2);
+	}
+|
+	LOOKAHEAD(3)
+	<OP> <FUZZY_NUMBER_MULT> t1 = TriangularFuzzyNumber() 
+	( t2 = TriangularFuzzyNumber()
+	{
+		t1 = TriangularFuzzyNumber.times(t1, t2);
+	}
+	)+
+	<CP>
+	{
+	return t1;
+	}
+|
+	LOOKAHEAD(3)
+	<OP> <FUZZY_NUMBER_DIV> t1 = TriangularFuzzyNumber() t2 = TriangularFuzzyNumber() <CP>
+	{
+		return TriangularFuzzyNumber.times(t1, t2);
+	}
+}
+
+
+/**
+ * Gets an individual.
+ */
+private Individual Individual() throws InconsistentOntologyException :
+{
+	Token t;
+}
+{
+	t = <IDENTIFIER>
+	{
+		 return kb.getIndividual(t.image);
+	}
+}
+
+
+/**
+ * Gets a fuzzy modifier.
+ */
+private Modifier Modifier() throws FuzzyOntologyException :
+{
+	Token t;
+	Modifier a;
+}
+{
+	t = <IDENTIFIER>
+	{
+		 if( kb.modifiers.isEmpty() || (! kb.modifiers.containsKey(t.image)) )
+		 {
+		 	a = null;
+		 	Util.error("Error: " + t.image + " modifier is not defined.");
+		 }
+		 else
+		 	a = (Modifier) kb.modifiers.get(t.image);
+		return a;
+	}
+}
+
+
+/**
+ * Gets a fuzzy concept.
+ */
+private Concept Concept() throws FuzzyOntologyException, InconsistentOntologyException :
+{
+	Concept c, c1;
+	FuzzyConcreteConcept f;
+	TriangularFuzzyNumber fn;
+	FeatureFunction fun;
+	Individual i;
+	Token id;
+	Collection<Individual> inds = new ArrayList<Individual>();
+	Modifier mod;
+	Object n;
+	String name, role;
+	ArrayList<Concept> v = new ArrayList<Concept>();
+	Variable var;
+	double weight;
+	ArrayList<Double> weights = new ArrayList<Double>();
+}
+{
+	c = AtomicConcept()
+	{
+		return c;
+	}
+|
+	LOOKAHEAD(2)
+	<OP> <NOT> c = Concept() <CP>
+	{
+		return Concept.complement(c);
+	}
+|
+	LOOKAHEAD(4)
+	<OP> <OSB> <GRE> weight = Number() <CSB> c = Concept() 
+	{
+		checkAbstract(c);
+	} <CP>
+	{
+		return Concept.posThreshold(weight, c);
+	}
+|
+	LOOKAHEAD(4)
+	<OP> <OSB> <LESS> weight = Number() <CSB> c = Concept() 
+	{
+		checkAbstract(c);
+	}
+	<CP>
+	{
+		return Concept.negThreshold(weight, c);
+	}
+|
+	LOOKAHEAD(4)
+	<OP> <OSB> <GRE> var = Variable() <CSB> c = Concept() 
+	{
+		checkAbstract(c);
+	} <CP>
+	{
+		return Concept.extendedPosThreshold(var, c);
+	}
+|
+	LOOKAHEAD(4)
+	<OP> <OSB> <LESS> var = Variable() <CSB> c = Concept() 
+	{
+		checkAbstract(c);
+	} <CP>
+	{
+		return Concept.extendedNegThreshold(var, c);
+	}
+|
+	LOOKAHEAD(2)
+	<OP> <AND> ( c = Concept()
+	{
+		checkAbstract(c);
+		v.add(c);
+	}
+	)+
+	<CP>
+	{
+		switch(kb.getLogic())
+		{
+			case LUKASIEWICZ:
+				return Concept.lAnd(v);
+				break;
+			case ZADEH:
+				return Concept.gAnd(v);
+				break;
+			default: // FuzzyLogic.CLASSICAL:
+				return Concept.and(v);
+		}
+	}
+|
+	LOOKAHEAD(2)
+	<OP> <G_AND> ( c = Concept()
+	{
+		checkAbstract(c);
+		v.add(c);
+	}
+	)+
+	<CP>
+	{
+		if (kb.getLogic() == FuzzyLogic.CLASSICAL)
+			Util.error("Error: G_AND cannot be used under classical reasoner.");
+		return Concept.gAnd(v);
+	}
+|
+	LOOKAHEAD(2)
+	<OP> <L_AND> ( c = Concept()
+	{
+		checkAbstract(c);
+		v.add(c);
+	}
+	)+
+	<CP>
+	{
+		if (kb.getLogic() == FuzzyLogic.CLASSICAL)
+			Util.error("Error: L_AND cannot be used under classical reasoner.");
+		return Concept.lAnd(v);
+	}
+|
+	LOOKAHEAD(2)
+	<OP> <L_IMPLIES> c = Concept() c1 = Concept()
+	{
+		checkAbstract(c);
+		checkAbstract(c1);
+		if (kb.getLogic() == FuzzyLogic.CLASSICAL)
+			Util.error("Error: L_IMPLIES cannot be used under classical reasoner.");
+		c = Concept.lImplies(c,c1);
+	}
+	<CP>
+	{
+		return c;
+	}
+|
+	LOOKAHEAD(2)
+	<OP> <KD_IMPLIES> c = Concept() c1 = Concept()
+	{
+		checkAbstract(c);
+		checkAbstract(c1);
+		if (kb.getLogic() == FuzzyLogic.CLASSICAL)
+			Util.error("Error: KD_IMPLIES cannot be used under classical reasoner.");
+		c = Concept.kdImplies(c,c1);
+	}
+	<CP>
+	{
+		return c;
+	}
+|
+	LOOKAHEAD(2)
+	<OP> <G_IMPLIES> c = Concept() c1 = Concept()
+	{
+		checkAbstract(c);
+		checkAbstract(c1);
+		if (kb.getLogic() == FuzzyLogic.CLASSICAL)
+			Util.error("Error: G_IMPLIES cannot be used under classical reasoner.");
+		c = Concept.gImplies(c,c1);
+	}
+	<CP>
+	{
+		return c;
+	}
+|
+	LOOKAHEAD(2)
+	<OP> <IMPLIES> c = Concept()  c1 = Concept()
+	{
+		checkAbstract(c);
+		checkAbstract(c1);
+	}
+	<CP>
+	{
+		switch(kb.getLogic())
+		{
+			case ZADEH:
+				return Concept.zImplies(c,c1);
+	
+			default:
+				return Concept.lImplies(c,c1);
+		}
+	}
+|
+	LOOKAHEAD(2)
+	<OP> <OR> ( c = Concept()
+	{
+		checkAbstract(c);
+		v.add(c);
+	}
+	)+
+	<CP>
+	{
+		switch(kb.getLogic())
+		{
+			case LUKASIEWICZ:
+				return Concept.lOr(v);
+	
+			case ZADEH:
+				return Concept.gOr(v);
+	
+			default:
+				return Concept.or(v);
+		}
+	}
+|
+	LOOKAHEAD(2)
+	<OP> <G_OR> ( c = Concept()
+	{
+		checkAbstract(c);
+		v.add(c);
+	}
+	)+
+	<CP>
+	{
+		if (kb.getLogic() == FuzzyLogic.CLASSICAL)
+			Util.error("Error: G_OR cannot be used under classical reasoner.");
+		return Concept.gOr(v);
+	}
+|
+	LOOKAHEAD(2)
+	<OP> <L_OR> ( c = Concept()
+	{
+		checkAbstract(c);
+		v.add(c);
+	}
+	)+
+	<CP>
+	{
+		if (kb.getLogic() == FuzzyLogic.CLASSICAL)
+			Util.error("Error: L_OR cannot be used under classical reasoner.");
+		return Concept.lOr(v);
+	}
+|
+	LOOKAHEAD(6)
+	<OP> <SOME> role = Role() c = Concept() <CP>
+	{
+		kb.checkRole(role, c);
+		return Concept.some(role, c);
+	}
+|
+	LOOKAHEAD(2)
+	<OP> <HAS_VALUE> role = Role() i = Individual() <CP>
+	{
+		kb.checkRole(role, Concept.CONCEPT_TOP);
+		return Concept.hasValue(role, i);
+	}
+|
+	LOOKAHEAD(6)
+	<OP> <SOME> role = Role() <OCB> i = Individual() <CCB> <CP>
+	{
+		kb.checkRole(role, Concept.CONCEPT_TOP);
+		return Concept.hasValue(role, i);
+	}
+|
+	LOOKAHEAD(2)
+	<OP> <ALL> role = Role() c = Concept() <CP>
+	{
+		kb.checkRole(role, c);
+		return Concept.all(role, c);
+	}
+|
+	LOOKAHEAD(2)
+	<OP> <SELF> role = Role() <CP>
+	{
+		if (kb.concreteRoles.contains(role))
+			Util.error("Error: Role " + role + " cannot be concrete and abstract.");
+	
+		kb.abstractRoles.add(role);
+		return Concept.self(role);
+	}
+|
+	LOOKAHEAD(2)
+	<OP> <UPPER_APPROX> role = Role() c = Concept() <CP>
+	{
+		if (!kb.similarityRels.contains(role))
+			Util.error("Error: Similarity relation " + role + " has not been defined.");
+	
+		return Concept.upperApprox(role,c);
+	}
+|
+	LOOKAHEAD(2)
+	<OP> <LOWER_APPROX> role = Role() c = Concept() <CP>
+	{
+		if (!kb.similarityRels.contains(role))
+			Util.error("Error: Similarity relation " + role + " has not been defined.");
+	
+		return Concept.lowerApprox(role,c);
+	}
+|
+	LOOKAHEAD(2)
+	<OP> <TIGHT_UPPER_APPROX> role = Role() c = Concept() <CP>
+	{
+		if (!kb.similarityRels.contains(role))
+			Util.error("Error: Similarity relation " + role + " has not been defined.");
+	
+		return Concept.tightUpperApprox(role,c);
+	}
+|
+	LOOKAHEAD(2)
+	<OP> <TIGHT_LOWER_APPROX> role = Role() c = Concept() <CP>
+	{
+		if (!kb.similarityRels.contains(role))
+			Util.error("Error: Similarity relation " + role + " has not been defined.");
+	
+		return Concept.tightLowerApprox(role,c);
+	}
+|
+	LOOKAHEAD(2)
+	<OP> <LOOSE_UPPER_APPROX> role = Role() c = Concept() <CP>
+	{
+		if (!kb.similarityRels.contains(role))
+			Util.error("Error: Similarity relation " + role + " has not been defined.");
+	
+		return Concept.looseUpperApprox(role,c);
+	}
+|
+	LOOKAHEAD(2)
+	<OP> <LOOSE_LOWER_APPROX> role = Role() c = Concept() <CP>
+	{
+		if (!kb.similarityRels.contains(role))
+			Util.error("Error: Similarity relation " + role + " has not been defined.");
+	
+		return Concept.looseLowerApprox(role,c);
+	}
+|
+	LOOKAHEAD(3)
+	<OP> mod = Modifier() c = Concept() <CP>
+	{
+		return mod.modify(c);
+	}
+|
+	LOOKAHEAD(6)
+	<OP> <LESS> role = Role() fun = FeatureFunction() <CP>
+	{
+		return kb.addDatatypeRestriction(Concept.AT_MOST_VALUE, fun, role);
+	}
+|
+	LOOKAHEAD(6)
+	<OP> <GRE> role = Role() fun = FeatureFunction() <CP>
+	{
+		return kb.addDatatypeRestriction(Concept.AT_LEAST_VALUE, fun, role);
+	}
+|
+	LOOKAHEAD(6)
+	<OP> <EQL> role = Role() fun = FeatureFunction() <CP>
+	{
+		return kb.addDatatypeRestriction(Concept.EXACT_VALUE, fun, role);
+	}
+|
+	LOOKAHEAD(6)
+	<OP> <LESS> role = Role() fn = TriangularFuzzyNumber() <CP>
+	{
+		if ((fn.getA() ==  fn.getB()) && (fn.getB() ==  fn.getC()))
+			return kb.addDatatypeRestriction(Concept.AT_MOST_VALUE, fn.getA(), role);
+		else
+		{
+			if (TriangularFuzzyNumber.hasDefinedRange() ==  false)
+				Util.error("Error: The range of the fuzzy numbers has to be defined before being used.");
+			return kb.addDatatypeRestriction(Concept.AT_MOST_VALUE, fn, role);
+		}
+	}
+|
+	LOOKAHEAD(6)
+	<OP> <GRE> role = Role() fn = TriangularFuzzyNumber() <CP>
+	{
+		if ((fn.getA() ==  fn.getB()) && (fn.getB() ==  fn.getC()))
+			return kb.addDatatypeRestriction(Concept.AT_LEAST_VALUE, fn.getA(), role);
+		else
+		{
+			if (TriangularFuzzyNumber.hasDefinedRange() ==  false)
+				Util.error("Error: The range of the fuzzy numbers has to be defined before being used.");
+			return kb.addDatatypeRestriction(Concept.AT_LEAST_VALUE, fn, role);
+		}
+	}
+|
+	LOOKAHEAD(6)
+	<OP> <EQL> role = Role() fn = TriangularFuzzyNumber() <CP>
+	{
+		if ((fn.getA() ==  fn.getB()) && (fn.getB() ==  fn.getC()))
+			return kb.addDatatypeRestriction(Concept.EXACT_VALUE, fn.getA(), role);
+		else
+		{
+			if (TriangularFuzzyNumber.hasDefinedRange() ==  false)
+				Util.error("Error: The range of the fuzzy numbers has to be defined before being used.");
+			return kb.addDatatypeRestriction(Concept.EXACT_VALUE, fn, role);
+		}
+	}
+|
+	LOOKAHEAD(6)
+	<OP> <LESS> role = Role() id = <IDENTIFIER> <CP>
+	{
+		 name = id.image;
+		 if (kb.checkFuzzyNumberConceptExists(name))
+			 return kb.addDatatypeRestriction(Concept.AT_MOST_VALUE, kb.getConcept(name), role);
+		 else
+		 {
+			var = new Variable(name, Variable.FREE_VARIABLE);
+			return kb.addDatatypeRestriction(Concept.AT_MOST_VALUE, var, role);
+		 }
+	}
+|
+	LOOKAHEAD(6)
+	<OP> <GRE> role = Role() id = <IDENTIFIER>  <CP>
+	{
+		name = id.image;
+		if (kb.checkFuzzyNumberConceptExists(name))
+			return kb.addDatatypeRestriction(Concept.AT_LEAST_VALUE, kb.getConcept(name), role);
+		else
+		{
+			var = new Variable(name, Variable.FREE_VARIABLE);
+			return kb.addDatatypeRestriction(Concept.AT_LEAST_VALUE, var, role);
+		}
+	}
+|
+	LOOKAHEAD(6)
+	<OP> <EQL> role = Role() id = <IDENTIFIER>  <CP>
+	{
+		name = id.image;
+		if (kb.checkFuzzyNumberConceptExists(name))
+			return kb.addDatatypeRestriction(Concept.EXACT_VALUE, kb.getConcept(name), role);
+		else
+		{
+			var = new Variable(name, Variable.FREE_VARIABLE);
+			return kb.addDatatypeRestriction(Concept.EXACT_VALUE, var, role);
+		}
+	}
+|
+	LOOKAHEAD(6)
+	<OP> <LESS> role = Role() <COM> n = getString() <COM> <CP>
+	{
+		return kb.addDatatypeRestriction(Concept.AT_MOST_VALUE, n, role);
+	}
+|
+	LOOKAHEAD(6)
+	<OP> <GRE> role = Role() <COM> n = getString() <COM> <CP>
+	{
+		return kb.addDatatypeRestriction(Concept.AT_LEAST_VALUE, n, role);
+	}
+|
+	LOOKAHEAD(6)
+	<OP> <EQL> role = Role() <COM> n = getString() <COM> <CP>
+	{
+		return kb.addDatatypeRestriction(Concept.EXACT_VALUE, n, role);
+	}
+| 
+	LOOKAHEAD(6)
+	<OP> <SOME> role = Role() <OSB> <LESS> fun = FeatureFunction() <CSB> <CP>
+	{
+		return kb.addDatatypeRestriction(Concept.AT_MOST_VALUE, fun, role);
+	}
+|
+	LOOKAHEAD(6)
+	<OP> <SOME> role = Role() <OSB> <GRE> fun = FeatureFunction() <CSB> <CP>
+	{
+		return kb.addDatatypeRestriction(Concept.AT_LEAST_VALUE, fun, role);
+	}
+|
+	LOOKAHEAD(6)
+	<OP> <SOME> role = Role() <OCB> fun = FeatureFunction() <CCB> <CP>
+	{
+		return kb.addDatatypeRestriction(Concept.EXACT_VALUE, fun, role);
+	}
+|
+	LOOKAHEAD(6)
+	<OP> <SOME> role = Role() <OSB> <LESS> fn = TriangularFuzzyNumber() <CSB> <CP>
+	{
+		if ((fn.getA() ==  fn.getB()) && (fn.getB() ==  fn.getC()))
+			return kb.addDatatypeRestriction(Concept.AT_MOST_VALUE, fn.getA(), role);
+		else
+		{
+			if (TriangularFuzzyNumber.hasDefinedRange() ==  false)
+				Util.error("Error: The range of the fuzzy numbers has to be defined before being used.");
+			return kb.addDatatypeRestriction(Concept.AT_MOST_VALUE, fn, role);
+		}
+	}
+|
+	LOOKAHEAD(6)
+	<OP> <SOME> role = Role() <OSB> <GRE> fn = TriangularFuzzyNumber() <CSB> <CP>
+	{
+		if ((fn.getA() ==  fn.getB()) && (fn.getB() ==  fn.getC()))
+			return kb.addDatatypeRestriction(Concept.AT_LEAST_VALUE, fn.getA(), role);
+		else
+		{
+			if (TriangularFuzzyNumber.hasDefinedRange() ==  false)
+				Util.error("Error: The range of the fuzzy numbers has to be defined before being used.");
+			return kb.addDatatypeRestriction(Concept.AT_LEAST_VALUE, fn, role);
+		}
+	}
+|
+	LOOKAHEAD(6)
+	<OP> <SOME> role = Role() <OCB> fn = TriangularFuzzyNumber() <CCB> <CP>
+	{
+		if ((fn.getA() ==  fn.getB()) && (fn.getB() ==  fn.getC()))
+			return kb.addDatatypeRestriction(Concept.EXACT_VALUE, fn.getA(), role);
+		else
+		{
+			if (TriangularFuzzyNumber.hasDefinedRange() ==  false)
+				Util.error("Error: The range of the fuzzy numbers has to be defined before being used.");
+			return kb.addDatatypeRestriction(Concept.EXACT_VALUE, fn, role);
+		}
+	}
+|
+	LOOKAHEAD(6)
+	<OP> <SOME> role = Role() <OSB> <LESS> id = <IDENTIFIER> <CSB> <CP>
+	{
+		 name = id.image;
+		 if (kb.checkFuzzyNumberConceptExists(name))
+			 return kb.addDatatypeRestriction(Concept.AT_MOST_VALUE, kb.getConcept(name), role);
+		 else
+		 {
+			var = new Variable(name, Variable.FREE_VARIABLE);
+			return kb.addDatatypeRestriction(Concept.AT_MOST_VALUE, var, role);
+		 }
+	}
+|
+	LOOKAHEAD(6)
+	<OP> <SOME> role = Role() <OSB> <GRE> id = <IDENTIFIER> <CSB> <CP>
+	{
+		name = id.image;
+		if (kb.checkFuzzyNumberConceptExists(name))
+			return kb.addDatatypeRestriction(Concept.AT_LEAST_VALUE, kb.getConcept(name), role);
+		else
+		{
+			var = new Variable(name, Variable.FREE_VARIABLE);
+			return kb.addDatatypeRestriction(Concept.AT_LEAST_VALUE, var, role);
+		}
+	}
+|
+	LOOKAHEAD(6)
+	<OP> <SOME> role = Role() <OCB> id = <IDENTIFIER> <CCB> <CP>
+	{
+		name = id.image;
+		if (kb.checkFuzzyNumberConceptExists(name))
+			return kb.addDatatypeRestriction(Concept.EXACT_VALUE, kb.getConcept(name), role);
+		else
+		{
+			var = new Variable(name, Variable.FREE_VARIABLE);
+			return kb.addDatatypeRestriction(Concept.EXACT_VALUE, var, role);
+		}
+	}
+|
+	LOOKAHEAD(6)
+	<OP> <SOME> role = Role() <OSB> <LESS> <COM> n = getString() <COM> <CSB> <CP>
+	{
+		return kb.addDatatypeRestriction(Concept.AT_MOST_VALUE, n, role);
+	}
+|
+	LOOKAHEAD(6)
+	<OP> <SOME> role = Role() <OSB> <GRE> <COM> n = getString() <COM> <CSB> <CP>
+	{
+		return kb.addDatatypeRestriction(Concept.AT_LEAST_VALUE, n, role);
+	}
+|
+	LOOKAHEAD(6)
+	<OP> <SOME> role = Role() <OCB> <COM> n = getString() <COM> <CCB> <CP>
+	{
+		return kb.addDatatypeRestriction(Concept.EXACT_VALUE, n, role);
+	}
+|
+	LOOKAHEAD(2)
+	<OP> weight = Number() c = Concept()
+	{
+		c = Concept.weightedConcept(weight, c);
+	}
+	<CP>
+	{
+		return c;
+	}
+|
+	LOOKAHEAD(2)
+	<OP> <W_SUM> ( <OP> weight = Number() { weights.add(weight); } c = Concept() { v.add(c); } <CP> )+ <CP>
+	{
+		return new WeightedSumConcept(weights, v);
+	}
+|
+	LOOKAHEAD(2)
+	<OP> <W_SUM_ZERO> ( <OP> weight = Number() { weights.add(weight); } c = Concept() { v.add(c); } <CP> )+ <CP>
+	{
+		return new WeightedSumZeroConcept(weights, v);
+	}
+|
+	LOOKAHEAD(2)
+	<OP> <W_MAX> ( <OP> weight = Number() { weights.add(weight); } c = Concept() { v.add(c); } <CP> )+ <CP>
+	{
+		return new WeightedMaxConcept(weights, v);
+	}
+|
+	LOOKAHEAD(2)
+	<OP> <W_MIN> ( <OP> weight = Number() { weights.add(weight); } c = Concept() { v.add(c); } <CP> )+ <CP>
+	{
+		return new WeightedMinConcept(weights, v);
+	}
+|
+	LOOKAHEAD(2)
+	<OP> <OWA> <OP> ( weight = Number() { weights.add(weight); } )+ <CP> <OP> ( c = Concept() { v.add(c); } )+ <CP>
+	{
+		c = new OwaConcept(weights, v);
+	}
+	<CP>
+	{
+		return c;
+	}
+|
+	LOOKAHEAD(2)
+	<OP> <QOWA> id = <IDENTIFIER> ( c = Concept() { v.add(c); } )+
+	{
+		f = kb.concreteConcepts.get(id.image);
+		if (f ==  null)
+			Util.error("Error: Fuzzy concept " + id.image + " has to be defined before being used.");
+		if ( !(f instanceof RightConcreteConcept) && !(f instanceof LinearConcreteConcept) )
+			Util.error("Error: Fuzzy concept " + id.image + " has to be a right or a linear function.");
+		c = new QowaConcept(f, v);
+	}
+	<CP>
+	{
+		return c;
+	}
+|
+	LOOKAHEAD(2)
+	<OP> <CHOQUET> <OP> ( weight = Number() { weights.add(weight); } )+ <CP> <OP> ( c = Concept() { v.add(c); } )+ <CP>
+	{
+		c = new ChoquetIntegral(weights, v);
+	}
+	<CP>
+	{
+		return c;
+	}
+|
+	LOOKAHEAD(2)
+	<OP> <SUGENO> <OP> ( weight = Number() { weights.add(weight); } )+ <CP> <OP> ( c = Concept() { v.add(c); } )+ <CP>
+	{
+		c = new SugenoIntegral(weights, v);
+	}
+	<CP>
+	{
+		return c;
+	}
+|
+	LOOKAHEAD(2)
+	<OP> <QSUGENO> <OP> ( weight = Number() { weights.add(weight); } )+ <CP> <OP> ( c = Concept() { v.add(c); } )+ <CP>
+	{
+		c = new QsugenoIntegral(weights, v);
+	}
+	<CP>
+	{
+		return c;
+	}
+|
+	LOOKAHEAD(2)
+	<OP> <SIGMA_COUNT> role = Role() c1 = Concept()  
+		(<OCB> ( i = Individual() { inds.add(i); } )+ <CCB>)? id = <IDENTIFIER> <CP>
+	{
+		name = id.image;
+		if (kb.concreteConcepts.containsKey(name)) { 
+			f = (FuzzyConcreteConcept) kb.getConcept(name);
+			if ( !(f instanceof RightConcreteConcept) && !(f instanceof LeftConcreteConcept) && !(f instanceof TriangularConcreteConcept) )
+			  Util.error("Error: Fuzzy concept " + id.image + " has to be a left, right or a triangular function.");
+			return new SigmaConcept(c1, role, inds, f);
+	    }
+	    else
+	       Util.error("Error: Fuzzy concept " + id.image + " has not been defined.");
+	    return null;
+	}
+}
+
+
+/**
+ * Gets an atomic concept.
+ */
+private Concept AtomicConcept() throws FuzzyOntologyException :
+{
+	Token t;
+	Concept c;
+}
+{
+	t = <IDENTIFIER>
+	{
+		c = kb.getConcept(t.image);
+	}
+	{
+		return c;
+	}
+|
+	<TOP>
+	{
+		return Concept.CONCEPT_TOP;
+	}
+|
+	<BOTTOM>
+	{
+		return Concept.CONCEPT_BOTTOM;
+	}
+}
+
+
+/**
+ * Gets a fuzzy role.
+ */
+private String Role() :
+{
+	Token t;
+}
+{
+	t = <IDENTIFIER>
+	{
+		return t.image;
+	}
+}
+
+
+/**
+ * Gets a degree.
+ */
+private Degree Degree() :
+{
+  Double num = 1.0;
+  Expression expr;
+  Token t;
+  String name;
+}
+{
+	LOOKAHEAD(2)
+	t = <IDENTIFIER>
+	{
+		name = t.image;
+		Object o = truthConstants.get(name);
+		if (o !=  null)
+			return Degree.getDegree((Double) o);
+		else
+			return Degree.getDegree(kb.milp.getVariable(name));
+	}
+|
+	LOOKAHEAD(2)
+	expr = Expression()
+	{
+		return Degree.getDegree(expr);
+	}
+|
+	(LOOKAHEAD(2) num = Number())?
+	{
+		return Degree.getDegree(num);
+	}
+}
+
+
+/**
+ * Gets a variable.
+ */
+private Variable Variable() :
+{
+	Token t;
+}
+{
+	t = <IDENTIFIER>
+	{
+		return kb.milp.getVariable(t.image);
+	}
+	}
+	
+	
+	/**
+	 * Gets a real number.
+	 */
+	private double Number() :
+	{
+		Token n;
+	}
+	{
+	n = <NUMBER>
+	{
+		return Double.parseDouble(n.image);
+	}
+}
+
+
+/**
+ * Gets a String from a Token.
+ */
+String getString() :
+{
+	Token t;
+}
+{
+	t = <IDENTIFIER>
+	{
+		return t.image;
+	}
+}
+
+
+/**
+ * Gets a fuzzyDL representation of the type "string" for the range of concrete features
+ */
+String StringType() :
+{
+	Token t;
+}
+{
+	t = <STRING_TYPE>
+	{
+		return t.image;
+	}
+}
+
+
+/**
+ * Gets a fuzzyDL representation of the numerical types for the range of concrete features
+ */
+String NumericalType() :
+{
+	Token t;
+}
+{
+	t = <NUMBER_TYPE>
+	{
+		return t.image;
+	}
+}
+
+

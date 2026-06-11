@@ -1,0 +1,75 @@
+%./examples/TestSuite/bsome.txt
+(define-fuzzy-logic classical)
+%(define-fuzzy-logic zadeh)
+%(define-fuzzy-logic lukasiewicz)
+
+
+(functional R)
+%(functional S)
+%(instance a (some R A))
+%(instance a (some R B))
+%(instance a (some S B))
+%(instance a (b-some R b))
+%(instance a (b-some S b))
+%(instance a (all R A))
+%(instance a (all S B))
+%(instance a (b-some R b))
+
+(sat?)
+
+%(min-instance? b A)
+
+(instance b B)
+%(instance c C)
+(instance c (not B))
+(instance d D)
+%(instance a (or (b-some R b)  (b-some R c) (b-some R d) ) )
+(instance a (or (b-some R b)  (b-some R c) ) )
+%(instance a (and (b-some R b)  (b-some R c) ) )
+%(min-related? a b R)
+%(min-instance? b B)
+
+
+%(related a b R 0.8)
+%(instance b (and A B) 0.8)
+
+%(instance a (some R A))
+%(related a b R)
+%(instance a (b-some R b))
+%(instance a (b-some R c))
+%(instance a (not (b-some R c)))
+%(min-instance? b A)
+%(sat?)
+
+
+%(related a b R 0.5)
+%(related a b R)
+%(related a c R)
+
+%(instance a (some R A))
+%(instance a (some R B))
+%(instance a (some R (not A)))
+%(instance a (all R C))
+%(instance a (some R B))
+
+%(instance a (some R A))
+%(instance a (b-some R b))
+%(instance a (not (b-some R b)))
+%(instance a (b-some R b))
+%(instance a (not (b-some R c)))
+%(instance a (some R B))
+%(instance a (b-some R c))
+
+
+%(instance a (or (b-some R b)  (b-some R c) ) )
+%(instance a (or (b-some R b)  (b-some R c) (b-some R d) ) )
+%(instance a (and (b-some R b)  (b-some R c) ) )
+%(instance c A)
+%(instance d (not A) )
+
+%(show-abstract-fillers R)
+
+%(min-instance? a (b-some R b))
+
+
+%(sat?)

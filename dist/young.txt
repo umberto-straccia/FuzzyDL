@@ -1,0 +1,6 @@
+(instance umberto Minor)
+
+%(max-instance? umberto Minor)
+
+(all-instances? Minor)
+

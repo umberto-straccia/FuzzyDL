@@ -1,0 +1,11 @@
+(define-fuzzy-logic zadeh)
+(implies  *top* (all invR (all invS (not C))))
+(implies  *top* (some R C))
+(implies  *top* (some S C))
+(instance a C 1)
+(inverse R invR)
+(inverse S invS)
+#(min-instance? a A)
+#(min-instance? a (some R A))
+(min-instance? a C)
+

@@ -1,0 +1,30 @@
+#(define-fuzzy-logic classical)
+(define-fuzzy-logic zadeh)
+#(define-fuzzy-logic lukasiewicz)
+
+(functional hasPrice)
+#(range hasPrice *real* 0 150000)
+(range hasPrice *real* 0 1.5E5)
+
+#(functional hasFriend)
+#(range hasFriend Person)
+
+(define-fuzzy-concept AudiTTPrice right-shoulder(0,5.0E4,30500,31500))
+#(define-fuzzy-concept AudiTTPrice right-shoulder(0,50000,30500,31500))
+(define-concept AudiTT (and SportsCar (some hasPrice AudiTTPrice)))
+
+(define-fuzzy-concept BuyerPrice left-shoulder(0,50000,30000,32000))
+(define-concept BuyerQuery (and SportsCar (some hasPrice BuyerPrice)))
+
+
+
+(show-concrete-fillers hasPrice)
+
+(max-sat? (and BuyerQuery AudiTT))
+#(instance a *top*)
+#(sat?)
+
+#(min-instance? a A)
+
+
+

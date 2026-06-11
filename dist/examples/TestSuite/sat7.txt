@@ -1,0 +1,9 @@
+%./examples/TestSuite/sat7.txt
+(functional R)
+%(implies *top* C 0.25)
+(implies *top* (some R *top*)) 
+(equivalent-concepts C (and (all R C) (all R C)))
+(instance a C 0.5)
+(instance a (not C) 0.5)
+(sat?)
+%(min-instance? a C)

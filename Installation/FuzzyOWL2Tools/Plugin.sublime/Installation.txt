@@ -1,0 +1,14 @@
+
+The file "fuzzyDL.tmLanguage" allows Sublime text editor (http://www.sublimetext.com) to highlight fuzzyDL syntax.
+
+
+To install it, simple copy the "fuzzyDL.tmLanguage" file into the Sublime user's package folder.
+
+	1. To access the package folder, select the Sublime option Preferences - Browse packages.
+	2. Copy the file in the folder "User" (create the folder if it does not exist). 
+
+Once installed, fuzzy ontology files with extension ".fdl" will be automatically highlighted.
+
+See 
+
+http://www.sublimetext.com/docs/plugin-basics

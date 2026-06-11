@@ -1,0 +1,6 @@
+(define-fuzzy-logic zadeh)
+(define-modifier very triangular-modifier(0.8, 1.0, 1.0))
+
+(instance a C 0.9)
+
+(min-instance? a (very C) )

@@ -1,0 +1,6 @@
+(instance a Minor)
+(instance b Minor)
+
+(all-instances? Minor)
+
+

@@ -1,0 +1,9 @@
+(implies  *top* (some R C))
+(inverse invR R)
+(functional invR)
+(instance a (not C) 0.6)
+
+#(min-instance? a A)
+#(min-instance? a (some R C))
+(min-instance? a (some R (some R C)))
+

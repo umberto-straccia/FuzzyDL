@@ -1,0 +1,18 @@
+(define-fuzzy-logic classical)
+#(define-fuzzy-logic zadeh)
+#(define-fuzzy-logic lukasiewicz)
+
+(implies  *top* (all invR (all invS (not C))))
+
+%(implies  *top* (some R C))
+(implies  *top* (some S C))
+(implies  *top* (some R C))
+
+(inverse R invR)
+(inverse S invS)
+
+(instance a C 1)
+
+%(sat?)
+%(min-instance? a C)
+(min-instance? a A)
