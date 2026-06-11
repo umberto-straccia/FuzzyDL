@@ -1,4 +1,5 @@
-# fuzzyDL
+# fuzzyDL (Java Version)
+
 Fernando Bobillo and Umberto Straccia. The Fuzzy Ontology Reasoner fuzzyDL. In Knowledge-Based Systems, 95, pages 12--34, Elsevier, 2016.
 
 @article{Bobillo16,
